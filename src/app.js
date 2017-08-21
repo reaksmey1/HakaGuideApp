@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
+import reducers from './reducers';
+import Router from './Router';
 import { Container, Header, Item, Input, Icon, Button, Text } from 'native-base';
 
 class App extends Component {
 	render() {
 		return (
-			<Container>
-        <Header searchBar rounded>
-          <Item>
-            <Icon name="ios-search" />
-            <Input placeholder="Search" />
-            <Icon name="ios-people" />
-          </Item>
-          <Button transparent>
-            <Text>Search</Text>
-          </Button>
-        </Header>
-      </Container>
+			<Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
+				<Router />
+			</Provider>
 		);
 	}
 }
