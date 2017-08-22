@@ -27,7 +27,7 @@ const loginUserSuccess = (dispatch, session) => {
 		type: LOGIN_USER_SUCCESS,
 		payload: session
 	});
-	// Actions.main1();
+	Actions.main();
 };
 
 const loginUserFail = (dispatch, text) => {
