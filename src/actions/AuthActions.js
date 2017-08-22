@@ -29,8 +29,11 @@ const loginUserSuccess = (dispatch, session) => {
 	// Actions.main1();
 };
 
-const loginUserFail = (dispatch) => {
-	dispatch({type: LOGIN_USER_FAIL});
+const loginUserFail = (dispatch, text) => {
+	dispatch({
+		type: LOGIN_USER_FAIL,
+		payload: text
+	});
 };
 
 export const loginUser = ({ email, password }) => {
@@ -43,10 +46,14 @@ export const loginUser = ({ email, password }) => {
 				"password": password
 			}
 		})
-		.then(response => loginUserSuccess(dispatch, response.data.session))
-			// response => {console.log(response.data);}
-			// console.log(response.data.session.token);)
-		.catch(error => loginUserFail(dispatch));
-		// console.log(error.response.data.errors);
+		.then((response) => {
+			if (response.data.session.is_admin) {
+				loginUserSuccess(dispatch, response.data.session)
+			} else {
+				loginUserFail(dispatch, "Access Denied !")
+			}
+		})
+		// .then(response => loginUserSuccess(dispatch, response.data.session))
+		.catch(error => loginUserFail(dispatch, "Authentication Failed"));
 	}
 };
