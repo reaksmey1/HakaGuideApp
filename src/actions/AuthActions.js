@@ -6,6 +6,7 @@ import { EMAIL_CHANGED,
 				 LOGIN_USER_SUCCESS,
 				 LOGIN_USER_FAIL 
 				} from './types';
+import { BASE_URL } from './config';
 
 export const emailChanged = (text) => {
 	return {
@@ -40,7 +41,7 @@ export const loginUser = ({ email, password }) => {
 	return (dispatch) => {
 		dispatch({ type: LOGIN_USER });
 
-		axios.post('https://hakatours.com/api/sessions', {
+		axios.post(BASE_URL+'/api/sessions', {
 			"session": {
 				"email": email,
 				"password": password
