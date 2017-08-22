@@ -53,6 +53,7 @@ class TourParty extends Component {
             <Input 
             	placeholder="Tour Group" 
             	onChangeText={this.onTourGroupChange.bind(this)}
+            	onSubmitEditing={this.onSearchButtonPress.bind(this)}
             	value={this.props.tourCode}
           	/>
           	<Icon name="ios-people" />
