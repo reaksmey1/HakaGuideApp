@@ -91,7 +91,7 @@ const mapStateToProps = ({ auth }) => {
 
 const styles = {
   loginBtn: {
-    marginTop: 40
+    marginTop: 15
   },
 
   loginTxt: {
