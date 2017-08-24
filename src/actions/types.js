@@ -6,6 +6,7 @@ export const LOGIN_USER_FAIL = 'login_user_fail';
 export const TOUR_GROUP_CHANGED = 'tour_group_changed';
 export const SHOW_CUSTOMERS = 'showCustomers';
 export const SHOW_CUSTOMERS_SUCCESS = 'showCustomersSuccess';
+export const SHOW_CUSTOMERS_FAIL = 'showCustomersFail';
 export const SHOW_TOURS = 'show_tours';
 export const SHOW_TOURS_SUCCESS = 'show_tours_success';
 export const SHOW_TOURS_FAIL = 'show_tours_fail';

@@ -5,31 +5,27 @@ import {
 				TOUR_GROUP_CHANGED,
 				SHOW_CUSTOMERS,
 				SHOW_CUSTOMERS_SUCCESS,
+				SHOW_CUSTOMERS_FAIL,
 				SHOW_TOURS,
 				SHOW_TOURS_SUCCESS,
 				SHOW_TOURS_FAIL
 			} from './types';
 
-const showCustomersSuccess = (dispatch) => {
+const showCustomersSuccess = (dispatch, customers) => {
 	dispatch({
-		type: SHOW_CUSTOMERS_SUCCESS
+		type: SHOW_CUSTOMERS_SUCCESS,
+		payload: customers
 	});
 
-	Actions.customerList();
+	// Actions.customerList();
 };
 
-const showToursSuccess = (dispatch, tours) => {
+const showCustomersFail = (dispatch) => {
 	dispatch({
-		type: SHOW_TOURS_SUCCESS,
-		payload: tours
+		type: SHOW_CUSTOMERS_FAIL
 	});
 };
 
-const showToursFail = (dispatch) => {
-	dispatch({
-		type: SHOW_TOURS_FAIL
-	});
-}; 
 
 export const tourGroupChanged = (text) => {
 	return {
@@ -38,20 +34,16 @@ export const tourGroupChanged = (text) => {
 	};
 };
 
-export const showCustomers = () => {
+
+export const showCustomers = ({ tourCode, session }) => {
 	return (dispatch) => {
 		dispatch({ type: SHOW_CUSTOMERS });
-
-		showCustomersSuccess(dispatch);
-	};
-};
-
-export const showTours = ({ tourCode, session }) => {
-	return (dispatch) => {
-		dispatch({ type: SHOW_TOURS });
-		//TODO: Find departures by tour code
-		axios.get(BASE_URL+'/api/tour_info/departures?booked=true&include_past=true&tour_group_id=56b9543c1987b400b600001a', { headers: { email: session.email, token: session.token } })
-			.then(response => showToursSuccess(dispatch, response.data['tour_info/departures']))
-			.catch(error => showToursFail(dispatch));
+		axios.get(BASE_URL+`/api/bookings/bookings?agency_bookings=false&archived=false&booked=true&tour_code=${tourCode}`, { headers: { email: session.email, token: session.token } })
+			.then(response => showCustomersSuccess(dispatch, response.data["bookings/travellers"]))
+			// .then(response => showCustomersSuccess(dispatch, response))
+			// .then((response) => {
+			// 	console.log(response);
+			// })
+			.catch(error => showCustomersFail(dispatch));
 	}
 }

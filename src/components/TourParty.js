@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Header, Item, Input, Button, Text, Content, Card, CardItem, Body, FooterTab, Footer, Icon, Spinner } from 'native-base';
-import { tourGroupChanged, showCustomers, showTours} from '../actions';
+import { tourGroupChanged, showCustomers} from '../actions';
+import Customer from './Customer';
 
 class TourParty extends Component {
 	onTourGroupChange(text) {
 		this.props.tourGroupChanged(text);
 	}
 
-	onViewCustomerPress() {
-		this.props.showCustomers();
-	}
+	// onViewCustomerPress() {
+	// 	this.props.showCustomers();
+	// }
 
 	onSearchButtonPress() {
 		const { tourCode, session } = this.props;
-		this.props.showTours({ tourCode, session });
+		this.props.showCustomers({ tourCode, session });
+		// this.props.showTours({ tourCode, session });
+	}
+
+	viewDetail() {
+		console.log("click");
 	}
 
 	renderTours() {
@@ -22,25 +28,8 @@ class TourParty extends Component {
 			return <Spinner size='large' />;
 		}
 
-		return this.props.tours.map(tour => 
-			<Card key={tour.id}>
-				<CardItem header>
-	          <Text>Epic NZ Tour</Text>
-	        </CardItem>
-	        <CardItem>
-	          <Body>
-	            <Text> Departure Date: { tour.date } </Text>
-	            <Text> Price: { tour.tour_price } </Text>
-	            <Text> Direction: Auckland - Auckland </Text>
-	            <Text> Tour Adviser: Maz </Text>
-	          </Body>
-	        </CardItem>
-	        <CardItem footer>
-	          <Button block style={styles.loginBtn} onPress={this.onViewCustomerPress.bind(this)}>
-							<Text style={styles.loginTxt}>View Customers</Text>
-						</Button>
-	        </CardItem>
-      </Card>
+		return this.props.customers.map(customer => 
+			<Customer key={customer.id} customer={customer} />
 		);
 	}
 
@@ -109,11 +98,11 @@ const styles = {
 const mapStateToProps = state => {
 	return {
 		tourCode: state.tourParty.tourCode,
-		tours: state.tourParty.tours,
+		customers: state.tourParty.customers,
 		loading: state.tourParty.loading,
 		error: state.tourParty.error,
 		session: state.auth.session
 	};
 };
 
-export default connect(mapStateToProps, { tourGroupChanged, showCustomers, showTours })(TourParty);
+export default connect(mapStateToProps, { tourGroupChanged, showCustomers })(TourParty);
