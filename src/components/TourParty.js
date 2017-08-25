@@ -9,14 +9,9 @@ class TourParty extends Component {
 		this.props.tourGroupChanged(text);
 	}
 
-	// onViewCustomerPress() {
-	// 	this.props.showCustomers();
-	// }
-
 	onSearchButtonPress() {
 		const { tourCode, session } = this.props;
 		this.props.showCustomers({ tourCode, session });
-		// this.props.showTours({ tourCode, session });
 	}
 
 	viewDetail() {

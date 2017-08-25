@@ -10,3 +10,5 @@ export const SHOW_CUSTOMERS_FAIL = 'showCustomersFail';
 export const SHOW_TOURS = 'show_tours';
 export const SHOW_TOURS_SUCCESS = 'show_tours_success';
 export const SHOW_TOURS_FAIL = 'show_tours_fail';
+export const SHOW_ACTIVITIES = 'show_activities';
+export const SHOW_ACTIVITIES_SUCCESS = 'show_activities_success';

@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, View, Text, Card, CardItem, Body, Content, ListItem, CheckBox } from 'native-base';
+import { connect } from 'react-redux';
+import { Container, Header, Item, View, Text, Card, CardItem, Body, Content, ListItem, CheckBox, Icon } from 'native-base';
 
 class CustomerDetail extends Component {
+
+	renderActivities() {
+		const customer = this.props.customer;
+		const addons = this.props.activities;
+		return (
+			addons.map(addon => 
+				<ListItem key={addon.id}>
+	        <Body style={{ flexDirection: 'row' }}>
+	        	<Icon name="ios-arrow-down" />
+	          <Text style={{ paddingLeft: 15, paddingTop: 5 }}>{ addon.name }</Text>
+	        </Body>
+	      </ListItem>
+    	)
+		);
+	}
+
 	render() {
 		// console.log(this.props);
 		const customer = this.props.customer;
@@ -10,123 +27,23 @@ class CustomerDetail extends Component {
 				<Header>
 					<Body>
 	          <Text>{ customer.title }: { customer.first_name } { customer.last_name }</Text>
-            <Text> Paid: $ 722.55 of $ 2913 ( $ 2190.45 Left ) </Text>
+            <Text> Paid: $ { customer.links.total_paid } of $ { customer.links.total } ( $ { customer.links.balance_remaining } Left ) </Text>
           </Body>
 				</Header>
 				<Content>
-		      <ListItem>
-            <CheckBox checked={true} />
-            <Body>
-              <Text>Sky Diving</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} />
-            <Body>
-              <Text>Milford Sound Trip</Text>
-            </Body>
-          </ListItem>
+					{this.renderActivities()}
 	     	</Content>
 			</Container>
 		)
 	}
 }
 
-export default CustomerDetail;
+const mapStateToProps = state => {
+	return {
+		customer: state.tourParty.selectedCustomer,
+		activities: state.activity.activities
+	};
+};
+
+export default connect(mapStateToProps, {})(CustomerDetail);
 

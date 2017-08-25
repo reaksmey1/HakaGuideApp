@@ -4,6 +4,7 @@ import LoginForm from './components/LoginForm';
 import TourParty from './components/TourParty';
 import CustomerList from './components/CustomerList';
 import CustomerDetail from './components/CustomerDetail';
+import AddActivity from './components/AddActivity';
 
 const RouterComponent = () => {
 	return (
@@ -26,8 +27,15 @@ const RouterComponent = () => {
 				/>
 				<Scene
 					key="customerDetail"
+					onRight={() => Actions.addActivity()} 
+					rightTitle="Add"
 					component={CustomerDetail}
-					title="Customer Detail"
+					title="Activities"
+				/>
+				<Scene
+					key="addActivity"
+					component={AddActivity}
+					title="Add New Activity"
 				/>
 			</Scene>
 		</Router>

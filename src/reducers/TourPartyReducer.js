@@ -1,10 +1,11 @@
 import { TOUR_GROUP_CHANGED,
 				 SHOW_CUSTOMERS,
 				 SHOW_CUSTOMERS_SUCCESS,
-				 SHOW_CUSTOMERS_FAIL
+				 SHOW_CUSTOMERS_FAIL,
+				 SHOW_ACTIVITIES
 				} from '../actions/types';
 
-const INITIAL_STATE = {tourCode: '', customers: [], loading: false, error: ''};
+const INITIAL_STATE = {tourCode: '', customers: [], loading: false, error: '', selectedCustomer: null};
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
@@ -15,7 +16,9 @@ export default (state = INITIAL_STATE, action) => {
 		case SHOW_CUSTOMERS_SUCCESS:
 			return { ...state, loading: false, error: '', customers: action.payload }
 		case SHOW_CUSTOMERS_FAIL:
-		return { ...state, loading: false, customers: [], error: 'Something went wrong ! Please check your internet connection and try again' }
+			return { ...state, loading: false, customers: [], error: 'Something went wrong ! Please check your internet connection and try again' }
+		case SHOW_ACTIVITIES:
+			return { ...state, selectedCustomer: action.payload }
 		default:
 			return state;
 	}

@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Text, Card, CardItem, Body } from 'native-base';
+import { onCustomerSelected } from '../actions';
 
 class Customer extends Component {
 	onRowPress() {
-		// console.log(this.props.customer);
-		Actions.customerDetail({ customer: this.props.customer });
+		const customer = this.props.customer;
+		const session = this.props.session;
+		this.props.onCustomerSelected(customer, session);
 	}
 
 	render() {
@@ -39,4 +42,10 @@ const styles = {
 	}
 };
 
-export default Customer;
+const mapStateToProps = state => {
+	return {
+		session: state.auth.session
+	};
+};
+
+export default connect(mapStateToProps, { onCustomerSelected })(Customer);
