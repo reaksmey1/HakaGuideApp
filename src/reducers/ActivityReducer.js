@@ -5,7 +5,6 @@ import { SHOW_ACTIVITIES_SUCCESS,
 const INITIAL_STATE = {activities: [], error: ''};
 
 export default (state = INITIAL_STATE, action) => {
-	console.log(action);
 	switch (action.type) {
 		case SHOW_ACTIVITIES_SUCCESS:
 			return { ...state, activities: action.payload }

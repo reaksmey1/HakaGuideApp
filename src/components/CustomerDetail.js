@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Header, Item, View, Text, Card, CardItem, Body, Content, ListItem, CheckBox, Icon } from 'native-base';
+import { Container, Header, Item, View, Text, Card, Right, CardItem, Body, Content, List, ListItem, CheckBox, Icon } from 'native-base';
 
 class CustomerDetail extends Component {
 
@@ -9,11 +9,13 @@ class CustomerDetail extends Component {
 		const addons = this.props.activities;
 		return (
 			addons.map(addon => 
-				<ListItem key={addon.id}>
-	        <Body style={{ flexDirection: 'row' }}>
-	        	<Icon name="ios-arrow-down" />
-	          <Text style={{ paddingLeft: 15, paddingTop: 5 }}>{ addon.name }</Text>
-	        </Body>
+				<ListItem key={addon.id} icon>
+          <Body>
+          	<Text>{ addon.name } - $ { addon.price }</Text>
+        	</Body>
+        	<Right>
+        		<Icon name = "ios-close-circle-outline" style={{ color: 'red' }} />
+        	</Right>
 	      </ListItem>
     	)
 		);
@@ -31,7 +33,9 @@ class CustomerDetail extends Component {
           </Body>
 				</Header>
 				<Content>
-					{this.renderActivities()}
+					<List>
+						{this.renderActivities()}
+					</List>
 	     	</Content>
 			</Container>
 		)
