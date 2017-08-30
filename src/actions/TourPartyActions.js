@@ -9,9 +9,9 @@ import {
 				SHOW_TOURS,
 				SHOW_TOURS_SUCCESS,
 				SHOW_TOURS_FAIL,
-				SHOW_ACTIVITIES,
-				SHOW_ACTIVITIES_SUCCESS,
-				SHOW_ACTIVITIES_FAIL
+				SHOW_BOOKED_ACTIVITIES,
+				SHOW_BOOKED_ACTIVITIES_SUCCESS,
+				SHOW_BOOKED_ACTIVITIES_FAIL
 			} from './types';
 
 const showCustomersSuccess = (dispatch, customers) => {
@@ -21,27 +21,28 @@ const showCustomersSuccess = (dispatch, customers) => {
 	});
 };
 
-const showActivitiesSuccess = (dispatch, activities) => {
+const showBookedActivitiesSuccess = (dispatch, activities) => {
 	dispatch({
-		type: SHOW_ACTIVITIES_SUCCESS,
+		type: SHOW_BOOKED_ACTIVITIES_SUCCESS,
 		payload: activities
 	});
 
 	Actions.customerDetail();
 };
 
-const showActivitiesFail = (dispatch) => {
+const showBookedActivitiesFail = (dispatch) => {
 	dispatch({
-		type: SHOW_ACTIVITIES_FAIL
+		type: SHOW_BOOKED_ACTIVITIES_FAIL
 	});
 };
 
+
 export const onCustomerSelected = (customer, session) => {
 	return (dispatch) => {
-		dispatch({ type:  SHOW_ACTIVITIES, payload: customer});
+		dispatch({ type:  SHOW_BOOKED_ACTIVITIES, payload: customer});
 		axios.get(BASE_URL+`/api/bookings/bookings/${customer.booking_id}/getActivitiesByTraveller?traveller_id=${customer.id}`, { headers: { email: session.email, token: session.token } })
-			.then(response => showActivitiesSuccess(dispatch, response.data["bookings/addons"]))
-			.catch(error => showActivitiesFail(dispatch));
+			.then(response => showBookedActivitiesSuccess(dispatch, response.data["bookings/addons"]))
+			.catch(error => showBookedActivitiesFail(dispatch));
 	}
 };
 
@@ -67,4 +68,4 @@ export const showCustomers = ({ tourCode, session }) => {
 			.then(response => showCustomersSuccess(dispatch, response.data["bookings/travellers"]))
 			.catch(error => showCustomersFail(dispatch));
 	}
-}
+};

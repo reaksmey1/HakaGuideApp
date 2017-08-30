@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Header, Item, Input, Button, Text, Content, Card, CardItem, Body, FooterTab, Footer, Icon, Spinner } from 'native-base';
-import { tourGroupChanged, showCustomers} from '../actions';
+import { TouchableWithoutFeedback, View } from 'react-native';
+import { Container, 
+					Header, 
+					Item, 
+					Input, 
+					Button, 
+					Text, 
+					Content, 
+					Body, 
+					FooterTab, 
+					Footer, 
+					Icon, 
+					Spinner, 
+					List, 
+					ListItem,
+					Right } from 'native-base';
+import { tourGroupChanged, showCustomers, onCustomerSelected} from '../actions';
 import Customer from './Customer';
 
 class TourParty extends Component {
@@ -18,14 +33,32 @@ class TourParty extends Component {
 		console.log("click");
 	}
 
-	renderTours() {
+	renderCustomers() {
 		if (this.props.loading) {
 			return <Spinner size='large' />;
 		}
 
-		return this.props.customers.map(customer => 
-			<Customer key={customer.id} customer={customer} />
-		);
+		if (this.props.error) {
+			return <Text style={styles.errorText}> { this.props.error } </Text>;
+		}
+
+		return (
+			<List dataArray={this.props.customers}
+	      renderRow={(customer) =>
+	        <ListItem onPress={() => this.props.onCustomerSelected(customer, this.props.session)}>
+	        	<Body>
+		          <Text style={styles.customerHeader}>{ customer.title }: { customer.first_name } { customer.last_name }</Text>
+		          <Text style={styles.customerSubHeader}>{ customer.links.tour_name } </Text>
+		          <Text style={styles.customerDetails}> Nationality: { customer.nationality } </Text>
+		          <Text style={styles.customerDetails}> Date Of Birth: { customer.date_of_birth } </Text>
+	          </Body>
+	          <Right>
+		          <Icon name="arrow-forward" />
+		        </Right>
+	        </ListItem>
+	      }>
+	    </List>
+    );
 	}
 
 	render() {
@@ -47,18 +80,17 @@ class TourParty extends Component {
           </Button>
         </Header>
         <Content> 
-        	<Text style={styles.errorText}> { this.props.error } </Text>
-					{this.renderTours()}
+					{this.renderCustomers()}
 	     </Content>
 	     <Footer>
           <FooterTab>
             <Button active>
             	<Icon name="ios-subway" />
-              <Text>Departures List</Text>
+              <Text>Tour Party Info</Text>
             </Button>
             <Button>
             	<Icon name="ios-american-football" />
-              <Text>Activities List</Text>
+              <Text>Activities Sheet</Text>
             </Button>
           </FooterTab>
         </Footer>
@@ -87,6 +119,20 @@ const styles = {
 		alignSelf: 'center',
 		fontSize: 18,
 		marginTop: 5
+	},
+
+	customerDetails: {
+		fontSize: 14
+	},
+
+	customerSubHeader: {
+		fontSize: 16,
+		marginBottom: 5
+	},
+
+	customerHeader: {
+		color: 'green',
+		marginBottom: 5
 	}
 };
 
@@ -100,4 +146,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { tourGroupChanged, showCustomers })(TourParty);
+export default connect(mapStateToProps, { tourGroupChanged, showCustomers, onCustomerSelected })(TourParty);

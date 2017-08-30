@@ -27,15 +27,15 @@ const RouterComponent = () => {
 				/>
 				<Scene
 					key="customerDetail"
-					onRight={() => Actions.addActivity()} 
+					onRight={() => Actions.addActivity({title: 'Tour Itineraries'})} 
 					rightTitle="Add"
 					component={CustomerDetail}
-					title="Activities"
+					title="Booked Activities"
 				/>
 				<Scene
 					key="addActivity"
 					component={AddActivity}
-					title="Add New Activity"
+					title={this.title}
 				/>
 			</Scene>
 		</Router>

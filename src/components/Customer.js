@@ -16,21 +16,19 @@ class Customer extends Component {
 		const customer = this.props.customer;
 
 		return (
-			<TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
-				<View>
-					<Card>
-						<CardItem header>
-			          <Text>{ customer.title }: { customer.first_name } { customer.last_name }</Text>
-			        </CardItem>
-			        <CardItem>
-			          <Body>
-			            <Text> Nationality: { customer.nationality } </Text>
-			            <Text> Date Of Birth: { customer.date_of_birth } </Text>
-			          </Body>
-			        </CardItem>
-		      </Card>
-				</View>
-			</TouchableWithoutFeedback>
+			<View>
+				<Card>
+					<CardItem header>
+		          <Text>{ customer.title }: { customer.first_name } { customer.last_name }</Text>
+		        </CardItem>
+		        <CardItem>
+		          <Body>
+		            <Text> Nationality: { customer.nationality } </Text>
+		            <Text> Date Of Birth: { customer.date_of_birth } </Text>
+		          </Body>
+		        </CardItem>
+	      </Card>
+			</View>
 		);
 	}
 }
