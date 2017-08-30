@@ -24,7 +24,7 @@ class CustomerDetail extends Component {
 	          	<Text style={styles.addonDetails}>Price: ${ addon.price }</Text>
 	        	</Body>
 	        	<Right>
-		          <Icon name="arrow-forward" />
+		          <Icon name="ios-trash" />
 		        </Right>
 		      </ListItem>} 
       />

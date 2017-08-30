@@ -4,7 +4,9 @@ import LoginForm from './components/LoginForm';
 import TourParty from './components/TourParty';
 import CustomerList from './components/CustomerList';
 import CustomerDetail from './components/CustomerDetail';
-import AddActivity from './components/AddActivity';
+import Itineraries from './components/Itineraries';
+import Activities from './components/Activities';
+import Options from './components/Options';
 
 const RouterComponent = () => {
 	return (
@@ -27,14 +29,28 @@ const RouterComponent = () => {
 				/>
 				<Scene
 					key="customerDetail"
-					onRight={() => Actions.addActivity({title: 'Tour Itineraries'})} 
+					onLeft={() => Actions.tourParty()}
+					onRight={() => Actions.itineraries({title: 'Tour Itineraries'})} 
 					rightTitle="Add"
+					leftTitle="TPI"
 					component={CustomerDetail}
 					title="Booked Activities"
 				/>
 				<Scene
-					key="addActivity"
-					component={AddActivity}
+					key="itineraries"
+					component={Itineraries}
+					title={this.title}
+				/>
+
+				<Scene
+					key="activities"
+					component={Activities}
+					title={this.title}
+				/>
+
+				<Scene
+					key="options"
+					component={Options}
 					title={this.title}
 				/>
 			</Scene>

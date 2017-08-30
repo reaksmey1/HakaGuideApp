@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Header, Item, View, Text, Card, Right, CardItem, Body, Content, List, ListItem, CheckBox, Icon } from 'native-base';
-import { itinerariesFetch } from '../actions';
+import { itinerariesFetch, onItinerarySelected } from '../actions';
 
 
-class AddActivity extends Component {
+class Itineraries extends Component {
 	componentWillMount() {
 		const session = this.props.session;
 		const tour_id = this.props.tour_id;
 		this.props.itinerariesFetch(session, tour_id);
 	}
 
-	onRowPress() {
-		console.log("pressing");
-	}
-
-	renderActivities() {
+	renderItineraries() {
+		if (this.props.loading) {
+      return <Spinner size='large' />;
+    }
 		return (
 			this.props.days.map(day => 
-        <ListItem key={day.id} onPress={this.onRowPress.bind(this)}>
+        <ListItem key={day.id} onPress={() => this.props.onItinerarySelected(day, this.props.session)}>
         	<Body>
           	<Text>Day {day.ordinal_number}: {day.location_start} to {day.location_end}</Text>
         	</Body>
@@ -31,12 +30,11 @@ class AddActivity extends Component {
 	}
 
 	render() {
-		const days = this.dataSource;
 		return(
 			<Container>
 				<Content>
 					<List>
-					{this.renderActivities()}
+					{this.renderItineraries()}
 					</List>
 	     	</Content>
 			</Container>
@@ -45,7 +43,6 @@ class AddActivity extends Component {
 }
 
 const mapStateToProps = state => {
-	console.log(state.tourParty.days);
 	return {
 		days: state.activity.days,
 		session: state.auth.session,
@@ -53,5 +50,5 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { itinerariesFetch })(AddActivity);
+export default connect(mapStateToProps, { itinerariesFetch, onItinerarySelected })(Itineraries);
 
