@@ -10,40 +10,62 @@ import { Container,
 					Content, 
 					List, 
 					ListItem, 
-					Icon } from 'native-base';
+					Icon,
+					Spinner } from 'native-base';
+import { bookedActivitiesFetch, onActivityRefund } from '../actions';
 
 class CustomerDetail extends Component {
 
-	renderActivities() {
+	componentWillMount() {
+		this.props.bookedActivitiesFetch(this.props.customer, this.props.session);
+	}
+
+	renderHeader() {
+		if (this.props.loading) {
+      return <Spinner size='large' />;
+    }
+    return (
+    	<Body>
+    		<Text style={styles.titleHeader}>{ this.props.selectedTraveller.title }: { this.props.selectedTraveller.first_name } { this.props.selectedTraveller.last_name }</Text>
+	      <Text style={styles.titleSubHeader}> 
+	      	Paid: ${ this.props.selectedTraveller.links.total_paid } of ${ this.props.selectedTraveller.links.total } 
+	      	<Text style={{color: 'red'}}> 
+	      		( ${ this.props.selectedTraveller.links.balance_remaining } Left ) 
+      		</Text> 
+    		</Text>
+    	</Body>
+  	);
+	}
+
+	renderContent() {
+		if (this.props.loading) {
+      return <Spinner size='large' />;
+    }
 		return (
-			<List dataArray={this.props.booked_activities}
-	      renderRow={(addon) =>
-	        <ListItem>
-	          <Body>
-	          	<Text style={styles.addonHeader}>{ addon.name } </Text>
-	          	<Text style={styles.addonDetails}>Price: ${ addon.price }</Text>
-	        	</Body>
-	        	<Right>
-		          <Icon name="ios-trash" />
-		        </Right>
-		      </ListItem>} 
-      />
+			this.props.bookedActivities.map(addon => 
+        <ListItem key={addon.id} onPress={() => this.props.onActivityRefund(addon, this.props.session, this.props.customer)}>
+        	<Body>
+          	<Text style={styles.addonHeader}>{addon.name}</Text>
+          	<Text style={styles.addonDetails}>{addon.links.option_name}</Text>
+          	<Text style={styles.addonDetails}>Price: ${addon.price}</Text>
+        	</Body>
+        	<Right>
+	          <Icon style={{color: 'red', fontSize: 30}} name="ios-trash" />
+	        </Right>
+        </ListItem>
+      )
 		);
 	}
 
 	render() {
-		const customer = this.props.customer;
 		return(
 			<Container>
 				<Header>
-					<Body>
-	          <Text style={styles.titleHeader}>{ customer.title }: { customer.first_name } { customer.last_name }</Text>
-            <Text style={styles.titleSubHeader}> Paid: ${ customer.links.total_paid } of ${ customer.links.total } <Text style={{color: 'red'}}> ( ${ customer.links.balance_remaining } Left ) </Text> </Text>
-          </Body>
+					{this.renderHeader()}
 				</Header>
 				<Content>
-					{this.renderActivities()}
-	     	</Content>
+					{this.renderContent()}
+				</Content>
 			</Container>
 		)
 	}
@@ -72,9 +94,12 @@ const styles = {
 const mapStateToProps = state => {
 	return {
 		customer: state.tourParty.selectedCustomer,
-		booked_activities: state.tourParty.booked_activities
+		bookedActivities: state.activity.bookedActivities,
+		selectedTraveller: state.activity.selectedTraveller,
+		session: state.auth.session,
+		loading: state.activity.loading,
 	};
 };
 
-export default connect(mapStateToProps, {})(CustomerDetail);
+export default connect(mapStateToProps, { bookedActivitiesFetch, onActivityRefund })(CustomerDetail);
 

@@ -20,3 +20,6 @@ export const ACTIVITIES_FETCH_SUCCESS = 'activitiesFetchSuccess';
 export const ACTIVITY_SELECTED = 'activitySelected';
 export const OPTIONS_FETCH_SUCCESS = 'optionFetchSuccess';
 export const OPTION_SELECTED = 'optionSelected';
+export const ADD_ACTIVITY_SUCCESS = 'addActivitySuccess';
+export const UPDATE_BALANCE = 'updateBalance';
+export const CUSTOMER_SELECTED = 'customerSelected';

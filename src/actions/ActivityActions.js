@@ -8,7 +8,10 @@ import {
 				ACTIVITIES_FETCH_SUCCESS,
 				ACTIVITY_SELECTED,
 				OPTIONS_FETCH_SUCCESS,
-				OPTION_SELECTED
+				OPTION_SELECTED,
+				SHOW_BOOKED_ACTIVITIES,
+				SHOW_BOOKED_ACTIVITIES_SUCCESS,
+				SHOW_BOOKED_ACTIVITIES_FAIL
 			} from './types';
 
 const fetchItinerariesSuccess = (dispatch, days) => {
@@ -36,6 +39,52 @@ const fetchOptionsSuccess = (dispatch, activity, options) => {
 	Actions.options({title: activity.name})
 };
 
+
+const addActivitySuccess = (dispatch, activities) => {
+	dispatch({
+		type: SHOW_BOOKED_ACTIVITIES_SUCCESS,
+		payload: activities
+	});
+
+	Actions.customerDetail();
+};
+
+const addActivityFail = (dispatch) => {
+	dispatch({
+		type: SHOW_BOOKED_ACTIVITIES_FAIL
+	});
+};
+
+const showBookedActivitiesSuccess = (dispatch, response) => {
+	dispatch({
+		type: SHOW_BOOKED_ACTIVITIES_SUCCESS,
+		payload: response
+	});
+};
+
+const showBookedActivitiesFail = (dispatch) => {
+	dispatch({
+		type: SHOW_BOOKED_ACTIVITIES_FAIL
+	});
+};
+
+const addOptionSuccess = (dispatch) => {
+	Actions.customerDetail();
+};
+
+const activityRefundSuccess = (dispatch) => {
+	Actions.customerDetail();
+};
+
+export const bookedActivitiesFetch = (customer, session) => {
+	return (dispatch) => {
+		dispatch({ type:  SHOW_BOOKED_ACTIVITIES});
+		axios.get(BASE_URL+`/api/bookings/bookings/${customer.booking_id}/getActivitiesByTraveller?traveller_id=${customer.id}`, { headers: { email: session.email, token: session.token } })
+			.then(response => showBookedActivitiesSuccess(dispatch, response.data))
+			.catch(error => showBookedActivitiesFail(dispatch));
+	}
+};
+
 export const itinerariesFetch = (session, tour_id) => {
 	return (dispatch) => {
 		dispatch({ type: ITINERARIES_FETCH });
@@ -60,9 +109,21 @@ export const onActivitySelected = (activity, booking_id, session) => {
 	}
 };
 
-export const onOptionSelected = (option, session) => {
+export const onOptionSelected = (option, day, session, customer) => {
 	return (dispatch) => {
 		dispatch({ type: OPTION_SELECTED, payload: option});
-		Actions.customerDetail({ type: 'reset' })
+		axios.get(BASE_URL+`/api/bookings/bookings/${customer.booking_id}/addAddon?traveller=${customer.id}&option=${option.id}&day=${day.id}&user=${session.email}`, { headers: { email: session.email, token: session.token } })
+			.then(response => addOptionSuccess(dispatch))
+	}
+}
+
+export const onActivityRefund = (addon, session, customer) => {
+	return (dispatch) => {
+		dispatch({ type:  SHOW_BOOKED_ACTIVITIES});
+		axios.get(BASE_URL+`/api/bookings/bookings/${customer.booking_id}/refundAddon?traveller=${customer.id}&addon=${addon.id}&option=${addon.option_id}&day=${addon.day_id}&user=${session.email}`, { headers: { email: session.email, token: session.token } })
+			.then(
+				axios.get(BASE_URL+`/api/bookings/bookings/${customer.booking_id}/getActivitiesByTraveller?traveller_id=${customer.id}`, { headers: { email: session.email, token: session.token } })
+					.then(response => showBookedActivitiesSuccess(dispatch, response.data))
+				)
 	}
 }

@@ -6,12 +6,7 @@ import {
 				SHOW_CUSTOMERS,
 				SHOW_CUSTOMERS_SUCCESS,
 				SHOW_CUSTOMERS_FAIL,
-				SHOW_TOURS,
-				SHOW_TOURS_SUCCESS,
-				SHOW_TOURS_FAIL,
-				SHOW_BOOKED_ACTIVITIES,
-				SHOW_BOOKED_ACTIVITIES_SUCCESS,
-				SHOW_BOOKED_ACTIVITIES_FAIL
+				CUSTOMER_SELECTED
 			} from './types';
 
 const showCustomersSuccess = (dispatch, customers) => {
@@ -21,35 +16,19 @@ const showCustomersSuccess = (dispatch, customers) => {
 	});
 };
 
-const showBookedActivitiesSuccess = (dispatch, activities) => {
-	dispatch({
-		type: SHOW_BOOKED_ACTIVITIES_SUCCESS,
-		payload: activities
-	});
-
-	Actions.customerDetail();
-};
-
-const showBookedActivitiesFail = (dispatch) => {
-	dispatch({
-		type: SHOW_BOOKED_ACTIVITIES_FAIL
-	});
-};
-
-
-export const onCustomerSelected = (customer, session) => {
-	return (dispatch) => {
-		dispatch({ type:  SHOW_BOOKED_ACTIVITIES, payload: customer});
-		axios.get(BASE_URL+`/api/bookings/bookings/${customer.booking_id}/getActivitiesByTraveller?traveller_id=${customer.id}`, { headers: { email: session.email, token: session.token } })
-			.then(response => showBookedActivitiesSuccess(dispatch, response.data["bookings/addons"]))
-			.catch(error => showBookedActivitiesFail(dispatch));
-	}
-};
 
 const showCustomersFail = (dispatch) => {
 	dispatch({
 		type: SHOW_CUSTOMERS_FAIL
 	});
+};
+
+export const onCustomerSelected = (customer) => {
+
+	return (dispatch) => {
+		dispatch({ type: CUSTOMER_SELECTED, payload: customer });
+		Actions.customerDetail();
+	}
 };
 
 

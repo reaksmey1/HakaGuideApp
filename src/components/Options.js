@@ -30,13 +30,13 @@ class Options extends Component {
     }
 		return (
 			this.props.options.map(option => 
-        <ListItem key={option.id} onPress={() => this.props.onOptionSelected(option, this.props.session)}>
+        <ListItem key={option.id} onPress={() => this.props.onOptionSelected(option, this.props.day, this.props.session, this.props.customer)}>
         	<Body>
           	<Text style={styles.optionHeader}>{ option.name } </Text>
           	<Text style={styles.optionDetails}>Price: ${ option.price }</Text>
         	</Body>
         	<Right>
-	          <Icon style={{color: 'blue'}} name="ios-cart" />
+	          <Icon style={{color: 'blue', fontSize: 30}} name="ios-cart" />
 	        </Right>
         </ListItem>
       )
@@ -71,6 +71,8 @@ const mapStateToProps = state => {
 	return {
 		options: state.activity.options,
 		session: state.auth.session,
+		customer: state.tourParty.selectedCustomer,
+		day: state.activity.selectedDay
 	};
 };
 

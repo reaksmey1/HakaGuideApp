@@ -45,7 +45,7 @@ class TourParty extends Component {
 		return (
 			<List dataArray={this.props.customers}
 	      renderRow={(customer) =>
-	        <ListItem onPress={() => this.props.onCustomerSelected(customer, this.props.session)}>
+	        <ListItem onPress={() => this.props.onCustomerSelected(customer)}>
 	        	<Body>
 		          <Text style={styles.customerHeader}>{ customer.title }: { customer.first_name } { customer.last_name }</Text>
 		          <Text style={styles.customerSubHeader}>{ customer.links.tour_name } </Text>
