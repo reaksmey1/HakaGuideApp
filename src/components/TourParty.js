@@ -16,8 +16,7 @@ import { Container,
 					List, 
 					ListItem,
 					Right } from 'native-base';
-import { tourGroupChanged, showCustomers, onCustomerSelected} from '../actions';
-import Customer from './Customer';
+import { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet} from '../actions';
 
 class TourParty extends Component {
 	onTourGroupChange(text) {
@@ -31,6 +30,10 @@ class TourParty extends Component {
 
 	viewDetail() {
 		console.log("click");
+	}
+
+	onShowActivitySheetPress() {
+		this.props.showActivitySheet();
 	}
 
 	renderCustomers() {
@@ -88,7 +91,7 @@ class TourParty extends Component {
             	<Icon name="ios-subway" />
               <Text>Tour Party Info</Text>
             </Button>
-            <Button>
+            <Button onPress={this.onShowActivitySheetPress.bind(this)}>
             	<Icon name="ios-american-football" />
               <Text>Activities Sheet</Text>
             </Button>
@@ -146,4 +149,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { tourGroupChanged, showCustomers, onCustomerSelected })(TourParty);
+export default connect(mapStateToProps, { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet })(TourParty);

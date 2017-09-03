@@ -7,6 +7,10 @@ import CustomerDetail from './components/CustomerDetail';
 import Itineraries from './components/Itineraries';
 import Activities from './components/Activities';
 import Options from './components/Options';
+import ActivitySheet from './components/ActivitySheet';
+import TourGroupActivities from './components/TourGroupActivities';
+import TourGroupOptions from './components/TourGroupOptions';
+import TourGroupCustomers from './components/TourGroupCustomers';
 
 const RouterComponent = () => {
 	return (
@@ -53,6 +57,31 @@ const RouterComponent = () => {
 					component={Options}
 					title={this.title}
 				/>
+			</Scene>
+
+			<Scene key="activityMain">
+				<Scene
+					key="activitySheet"
+					component={ActivitySheet}
+					title="Activity Sheet"
+					initial
+				/>
+				<Scene
+					key="tourGroupActivities"
+					component={TourGroupActivities}
+					title={this.title}
+				/>
+				<Scene
+					key="tourGroupOptions"
+					component={TourGroupOptions}
+					title={this.title}
+				/>
+				<Scene
+					key="tourGroupCustomers"
+					component={TourGroupCustomers}
+					title={this.title}
+				/>
+
 			</Scene>
 		</Router>
 	);

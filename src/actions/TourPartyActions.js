@@ -39,6 +39,12 @@ export const tourGroupChanged = (text) => {
 	};
 };
 
+export const showActivitySheet = () => {
+	return (dispatch) => {
+		Actions.activityMain();
+	}
+};
+
 
 export const showCustomers = ({ tourCode, session }) => {
 	return (dispatch) => {
