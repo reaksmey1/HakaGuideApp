@@ -29,9 +29,6 @@ class TourGroupCustomers extends Component {
           	<Text style={styles.optionHeader}>{ customer.title }: {customer.first_name} {customer.last_name} </Text>
           	<Text style={styles.optionDetails}>{ customer.links.tour_name }</Text>
         	</Body>
-        	<Right>
-	          <Icon name="arrow-forward" />
-	        </Right>
         </ListItem>
       )
 		);
@@ -62,7 +59,6 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-	console.log(state);
 	return {
 		session: state.auth.session,
 		day: state.activitySheet.selectedDay,

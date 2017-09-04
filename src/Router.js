@@ -11,6 +11,7 @@ import ActivitySheet from './components/ActivitySheet';
 import TourGroupActivities from './components/TourGroupActivities';
 import TourGroupOptions from './components/TourGroupOptions';
 import TourGroupCustomers from './components/TourGroupCustomers';
+import TourGroupAddCustomers from './components/TourGroupAddCustomers';
 
 const RouterComponent = () => {
 	return (
@@ -79,6 +80,13 @@ const RouterComponent = () => {
 				<Scene
 					key="tourGroupCustomers"
 					component={TourGroupCustomers}
+					onRight={() => Actions.tourGroupAddCustomers({title: 'Add Customers'})} 
+					rightTitle="Add"
+					title={this.title}
+				/>
+				<Scene
+					key="tourGroupAddCustomers"
+					component={TourGroupAddCustomers}
 					title={this.title}
 				/>
 

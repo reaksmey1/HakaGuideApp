@@ -41,7 +41,7 @@ export const tourGroupChanged = (text) => {
 
 export const showActivitySheet = () => {
 	return (dispatch) => {
-		Actions.activityMain();
+		Actions.activityMain({type: 'reset'});
 	}
 };
 

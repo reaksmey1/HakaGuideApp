@@ -44,7 +44,11 @@ const fetchTourGroupOptionsSuccess = (dispatch, activity, options) => {
 	Actions.tourGroupOptions({title: activity.name})
 };
 
-const fetchTourGroupCustomersSuccess = (dispatch, option, customers) => {
+const fetchTourGroupCustomersSuccess = (dispatch, option, response) => {
+	customers = []
+	if (response.data["bookings/travellers"]) {
+		customers = response.data["bookings/travellers"]
+	} 
 	dispatch({
 		type: TOUR_GROUP_CUSTOMERS_FETCH_SUCCESS,
 		payload: customers
@@ -55,7 +59,7 @@ const fetchTourGroupCustomersSuccess = (dispatch, option, customers) => {
 
 export const showTourPartyInfo = () => {
 	return (dispatch) => {
-		Actions.main();
+		Actions.main({type: 'reset'});
 	}
 };
 
@@ -80,7 +84,8 @@ export const onTourGroupOptionSelected = (option, tourCode, session) => {
 	return (dispatch) => {
 		dispatch({ type: TOUR_GROUP_OPTION_SELECTED, payload: option });
 		axios.get(BASE_URL+`/api/tour_info/tour_groups/find_travellers_by_addon?tour_code=${tourCode}&option=${option}`, { headers: { email: session.email, token: session.token } })
-			.then(response => fetchTourGroupCustomersSuccess(dispatch, option, response.data["bookings/travellers"]))
+			// .then(response => fetchTourGroupCustomersSuccess(dispatch, option, response.data["bookings/travellers"]))
+			.then(response => fetchTourGroupCustomersSuccess(dispatch, option, response))
 	}
 };
 
