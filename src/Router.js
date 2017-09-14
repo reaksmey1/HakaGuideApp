@@ -12,6 +12,7 @@ import TourGroupActivities from './components/TourGroupActivities';
 import TourGroupOptions from './components/TourGroupOptions';
 import TourGroupCustomers from './components/TourGroupCustomers';
 import TourGroupAddCustomers from './components/TourGroupAddCustomers';
+import CheckoutPage from './components/CheckoutPage';
 
 const RouterComponent = () => {
 	return (
@@ -58,6 +59,12 @@ const RouterComponent = () => {
 					component={Options}
 					title={this.title}
 				/>
+
+				<Scene
+					key="checkoutPage"
+					component={CheckoutPage}
+					title="Checkout"
+				/>
 			</Scene>
 
 			<Scene key="activityMain">
@@ -80,7 +87,7 @@ const RouterComponent = () => {
 				<Scene
 					key="tourGroupCustomers"
 					component={TourGroupCustomers}
-					onRight={() => Actions.tourGroupAddCustomers({title: 'Add Customers'})} 
+					onRight={() => Actions.tourGroupAddCustomers({title: 'On Road Customers'})} 
 					rightTitle="Add"
 					title={this.title}
 				/>

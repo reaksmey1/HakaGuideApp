@@ -10,12 +10,20 @@ import { Container,
 					Content, 
 					List, 
 					ListItem,
-					Icon
+					Icon,
+					Spinner
 				} from 'native-base';
-import { } from '../actions';
+import { fetchTourGroupCustomers } from '../actions';
 
 
 class TourGroupCustomers extends Component {
+
+	componentWillMount() {
+		const session = this.props.session;
+		const option = this.props.option;
+		const tourCode = this.props.tourCode;
+		this.props.fetchTourGroupCustomers(tourCode, option, session);
+	}
 
 	renderCustomers() {
 		if (this.props.loading) {
@@ -63,9 +71,11 @@ const mapStateToProps = state => {
 		session: state.auth.session,
 		day: state.activitySheet.selectedDay,
 		customers: state.activitySheet.customers,
-		loading: state.activitySheet.loading
+		loading: state.activitySheet.loading,
+		tourCode: state.tourParty.tourCode,
+		option: state.activitySheet.selectedOption
 	};
 };
 
-export default connect(mapStateToProps, {})(TourGroupCustomers);
+export default connect(mapStateToProps, { fetchTourGroupCustomers })(TourGroupCustomers);
 

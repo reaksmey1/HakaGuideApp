@@ -45,7 +45,6 @@ export const showActivitySheet = () => {
 	}
 };
 
-
 export const showCustomers = ({ tourCode, session }) => {
 	return (dispatch) => {
 		dispatch({ type: SHOW_CUSTOMERS });

@@ -6,7 +6,12 @@ import { SHOW_ITINERARIES,
 				 TOUR_GROUP_OPTIONS_FETCH_SUCCESS,
 				 TOUR_GROUP_ACTIVITY_SELECTED,
 				 TOUR_GROUP_OPTION_SELECTED,
-				 TOUR_GROUP_CUSTOMERS_FETCH_SUCCESS
+				 TOUR_GROUP_CUSTOMERS_FETCH_SUCCESS,
+				 FETCHING_ON_ROAD_CUSTOMERS,
+				 ON_ROAD_CUSTOMERS_FETCH_SUCCESS,
+				 TOGGLE_CUSTOMER,
+				 ADD_MULTIPLE_CUSTOMERS,
+				 ADD_MULTIPLE_CUSTOMERS_SUCCESS
 				} from '../actions/types';
 
 const INITIAL_STATE = {itineraries: [],  
@@ -17,7 +22,9 @@ const INITIAL_STATE = {itineraries: [],
 												options: [],
 												selectedOption: null,
 												customers: [],
-												error: ''};
+												onRoadCustomers: [],
+												error: '',
+												selectedCustomers: []};
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
@@ -36,9 +43,25 @@ export default (state = INITIAL_STATE, action) => {
 		case TOUR_GROUP_OPTIONS_FETCH_SUCCESS:
 			return { ...state, loading: false, options: action.payload }
 		case TOUR_GROUP_OPTION_SELECTED:
-			return { ...state, loading: true}
+			return { ...state, selectedOption: action.payload, loading: true}
 		case TOUR_GROUP_CUSTOMERS_FETCH_SUCCESS:
 			return { ...state, loading: false, customers: action.payload }
+		case FETCHING_ON_ROAD_CUSTOMERS:
+			return { ...state, loading: true }
+		case ADD_MULTIPLE_CUSTOMERS:
+			return { ...state, loading: true }
+		case ADD_MULTIPLE_CUSTOMERS_SUCCESS:
+			return { ...state, loading: false }
+		case ON_ROAD_CUSTOMERS_FETCH_SUCCESS:
+			var tmp_on_road_customer = [];
+			for (var i in action.payload) {
+				el = action.payload[i];
+			  el["checked"] = false;
+			  tmp_on_road_customer.push(el);
+			}
+			return { ...state, loading: false, onRoadCustomers: tmp_on_road_customer }
+		case TOGGLE_CUSTOMER:
+			return { ...state, selectedCustomers: action.payload }
 		default:
 			return state;
 	}

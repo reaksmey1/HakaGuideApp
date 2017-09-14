@@ -11,8 +11,8 @@ import { Container,
 					List, 
 					ListItem, 
 					Icon,
-					Spinner } from 'native-base';
-import { bookedActivitiesFetch, onActivityRefund } from '../actions';
+					Spinner, Button } from 'native-base';
+import { bookedActivitiesFetch, onActivityRefund, onCheckoutPress } from '../actions';
 
 class CustomerDetail extends Component {
 
@@ -33,6 +33,7 @@ class CustomerDetail extends Component {
 	      		( ${ this.props.selectedTraveller.links.balance_remaining } Left ) 
       		</Text> 
     		</Text>
+    		<Button primary style={styles.checkoutButton} onPress={() => this.props.onCheckoutPress(this.props.session, this.props.selectedTraveller)}><Text> Pay </Text></Button>
     	</Body>
   	);
 	}
@@ -60,7 +61,7 @@ class CustomerDetail extends Component {
 	render() {
 		return(
 			<Container>
-				<Header>
+				<Header style={{height: 105}}>
 					{this.renderHeader()}
 				</Header>
 				<Content>
@@ -78,7 +79,7 @@ const styles = {
 
 	titleSubHeader: {
 		fontSize: 14,
-		marginBottom: 15
+		marginBottom: 5
 	},
 
 	addonHeader: {
@@ -88,6 +89,11 @@ const styles = {
 
 	addonDetails: {
 		fontSize: 14
+	},
+
+	checkoutButton: {
+		height: 30,
+		marginBottom: 5
 	}
 };
 
@@ -101,5 +107,5 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { bookedActivitiesFetch, onActivityRefund })(CustomerDetail);
+export default connect(mapStateToProps, { bookedActivitiesFetch, onActivityRefund, onCheckoutPress })(CustomerDetail);
 

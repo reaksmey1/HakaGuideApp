@@ -10,7 +10,12 @@ import {
 				TOUR_GROUP_OPTIONS_FETCH_SUCCESS,
 				TOUR_GROUP_ACTIVITY_SELECTED,
 				TOUR_GROUP_OPTION_SELECTED,
-				TOUR_GROUP_CUSTOMERS_FETCH_SUCCESS
+				TOUR_GROUP_CUSTOMERS_FETCH_SUCCESS,
+				FETCHING_ON_ROAD_CUSTOMERS,
+				ON_ROAD_CUSTOMERS_FETCH_SUCCESS,
+				TOGGLE_CUSTOMER,
+				ADD_MULTIPLE_CUSTOMERS,
+				ADD_MULTIPLE_CUSTOMERS_SUCCESS
 			} from './types';
 
 const showItinerariesSuccess = (dispatch, days) => {
@@ -53,8 +58,38 @@ const fetchTourGroupCustomersSuccess = (dispatch, option, response) => {
 		type: TOUR_GROUP_CUSTOMERS_FETCH_SUCCESS,
 		payload: customers
 	});
+};
 
-	Actions.tourGroupCustomers({title: option.name})
+const fetchOnRoadCustomersSuccess = (dispatch, option, response) => {
+	customers = []
+	if (response.data["bookings/travellers"]) {
+		customers = response.data["bookings/travellers"]
+	} 
+	dispatch({
+		type: ON_ROAD_CUSTOMERS_FETCH_SUCCESS,
+		payload: customers
+	});
+};
+
+const addMultipleCustomerSuccess = (dispatch) => {
+	dispatch({
+		type: ADD_MULTIPLE_CUSTOMERS_SUCCESS
+	});
+	Actions.tourGroupCustomers();
+};
+
+const generateAddMultipleCustomerHash = (session, option, day, selectedCustomers) => {
+	hash = [];
+	for (var i in selectedCustomers) {
+		tmp = {
+			"customer_id": selectedCustomers[i].id,
+			"option_id": option,
+			"day_id": day.id,
+			"booking_id": selectedCustomers[i].booking_id
+		}
+		hash.push(tmp)
+	}
+	return hash;
 };
 
 export const showTourPartyInfo = () => {
@@ -80,12 +115,25 @@ export const onTourGroupActivitySelected = (activity, session) => {
 	}
 };
 
+export const fetchTourGroupCustomers = (tourCode, option, session) => {
+	return (dispatch) => {
+		axios.get(BASE_URL+`/api/tour_info/tour_groups/find_travellers_by_addon?tour_code=${tourCode}&option=${option}`, { headers: { email: session.email, token: session.token } })
+			.then(response => fetchTourGroupCustomersSuccess(dispatch, option, response))
+	}
+};
+
 export const onTourGroupOptionSelected = (option, tourCode, session) => {
 	return (dispatch) => {
 		dispatch({ type: TOUR_GROUP_OPTION_SELECTED, payload: option });
-		axios.get(BASE_URL+`/api/tour_info/tour_groups/find_travellers_by_addon?tour_code=${tourCode}&option=${option}`, { headers: { email: session.email, token: session.token } })
-			// .then(response => fetchTourGroupCustomersSuccess(dispatch, option, response.data["bookings/travellers"]))
-			.then(response => fetchTourGroupCustomersSuccess(dispatch, option, response))
+		Actions.tourGroupCustomers();
+	}
+};
+
+export const onRoadCustomerFetch = (option, tourCode, session) => {
+	return (dispatch) => {
+		dispatch({ type: FETCHING_ON_ROAD_CUSTOMERS });
+		axios.get(BASE_URL+`/api/tour_info/tour_groups/find_unbooked_travellers_by_addon?tour_code=${tourCode}&option=${option}`, { headers: { email: session.email, token: session.token } })
+			.then(response => fetchOnRoadCustomersSuccess(dispatch, option, response))
 	}
 };
 
@@ -96,3 +144,19 @@ export const onTourGroupItinerarySelected = (day, session) => {
 			.then(response => fetchActivitiesSuccess(dispatch, day, response.data["addons/addons"]))
 	}
 };
+
+export const toggleCustomer = (selectedCustomers) => {
+	return (dispatch) => {
+		dispatch({ type: TOGGLE_CUSTOMER, payload: selectedCustomers });
+	}
+};
+
+export const onAddMultipleCustomerPress = (session, option, day, selectedCustomers) => {
+	return (dispatch) => {
+		dispatch({ type: ADD_MULTIPLE_CUSTOMERS });
+		var hash = generateAddMultipleCustomerHash(session, option, day, selectedCustomers);
+		axios.post(BASE_URL+`/api/bookings/bookings/addMultipleAddons?user=${session.email}`, {addons: hash}, { headers: { email: session.email, token: session.token, xsrfCookieName: 'XSRF-TOKEN', xsrfHeaderName: 'X-XSRF-TOKEN' } })
+			.then(response => addMultipleCustomerSuccess(dispatch))
+	}
+};
+
