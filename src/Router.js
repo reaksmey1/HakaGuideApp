@@ -13,6 +13,9 @@ import TourGroupOptions from './components/TourGroupOptions';
 import TourGroupCustomers from './components/TourGroupCustomers';
 import TourGroupAddCustomers from './components/TourGroupAddCustomers';
 import CheckoutPage from './components/CheckoutPage';
+import CheckoutOptions from './components/CheckoutOptions';
+import SplitPayment from './components/SplitPayment';
+import RefundRecipes from './components/RefundRecipes';
 
 const RouterComponent = () => {
 	return (
@@ -64,6 +67,24 @@ const RouterComponent = () => {
 					key="checkoutPage"
 					component={CheckoutPage}
 					title="Checkout"
+				/>
+
+				<Scene
+					key="checkoutOptions"
+					component={CheckoutOptions}
+					title="Check Out"
+				/>
+
+				<Scene
+					key="splitPayment"
+					component={SplitPayment}
+					title="SplitPayment"
+				/>
+
+				<Scene
+					key="refundRecipes"
+					component={RefundRecipes}
+					title="Recipes"
 				/>
 			</Scene>
 

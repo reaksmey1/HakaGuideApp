@@ -40,3 +40,4 @@ export const SHOW_CHECKOUT_PAGE_SUCCESS = "showCheckoutPageSuccess";
 export const SHOW_CHECKOUT_PAGE_FAIL = "showCheckoutPageFail";
 export const ADD_MULTIPLE_CUSTOMERS = "addMultipleCustomers";
 export const ADD_MULTIPLE_CUSTOMERS_SUCCESS = "addMultipleCustomersSuccess";
+export const AMOUNT_CHANGED = "amountChanged";
