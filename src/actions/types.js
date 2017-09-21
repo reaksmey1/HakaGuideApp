@@ -41,3 +41,7 @@ export const SHOW_CHECKOUT_PAGE_FAIL = "showCheckoutPageFail";
 export const ADD_MULTIPLE_CUSTOMERS = "addMultipleCustomers";
 export const ADD_MULTIPLE_CUSTOMERS_SUCCESS = "addMultipleCustomersSuccess";
 export const AMOUNT_CHANGED = "amountChanged";
+export const BOOKING_SELECTED = "bookingSelected";
+export const SHOW_TPI = "showingTPI";
+export const SHOW_TPI_SUCCESS = "showingTPISuccess";
+export const SHOW_TPI_FAILED = "showingTPIFailed";

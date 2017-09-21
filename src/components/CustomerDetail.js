@@ -17,7 +17,13 @@ import { bookedActivitiesFetch, onActivityRefund, onCheckoutPress } from '../act
 class CustomerDetail extends Component {
 
 	componentWillMount() {
-		this.props.bookedActivitiesFetch(this.props.customer, this.props.session);
+		this.props.bookedActivitiesFetch(this.props.booking, this.props.customer, this.props.session);
+	}
+
+	renderPayButton(){
+		if (this.props.selectedTraveller.links.balance_remaining > 0) {
+			return <Button primary style={styles.checkoutButton} onPress={() => this.props.onCheckoutPress(this.props.session, this.props.selectedTraveller)}><Text> Pay </Text></Button>;
+		}
 	}
 
 	renderHeader() {
@@ -33,7 +39,7 @@ class CustomerDetail extends Component {
 	      		( ${ this.props.selectedTraveller.links.balance_remaining } Left ) 
       		</Text> 
     		</Text>
-    		<Button primary style={styles.checkoutButton} onPress={() => this.props.onCheckoutPress(this.props.session, this.props.selectedTraveller)}><Text> Pay </Text></Button>
+    		{this.renderPayButton()}
     	</Body>
   	);
 	}
@@ -100,6 +106,7 @@ const styles = {
 const mapStateToProps = state => {
 	return {
 		customer: state.tourParty.selectedCustomer,
+		booking: state.tourParty.selectedBooking,
 		bookedActivities: state.activity.bookedActivities,
 		selectedTraveller: state.activity.selectedTraveller,
 		session: state.auth.session,

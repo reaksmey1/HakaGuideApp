@@ -15,7 +15,12 @@ import {
 				ON_ROAD_CUSTOMERS_FETCH_SUCCESS,
 				TOGGLE_CUSTOMER,
 				ADD_MULTIPLE_CUSTOMERS,
-				ADD_MULTIPLE_CUSTOMERS_SUCCESS
+				ADD_MULTIPLE_CUSTOMERS_SUCCESS,
+				SHOW_TPI,
+				SHOW_TPI_SUCCESS,
+				SHOW_TPI_FAILED,
+				CUSTOMER_SELECTED,
+				BOOKING_SELECTED
 			} from './types';
 
 const showItinerariesSuccess = (dispatch, days) => {
@@ -78,6 +83,19 @@ const addMultipleCustomerSuccess = (dispatch) => {
 	Actions.tourGroupCustomers();
 };
 
+const showTPISuccess = (dispatch, tpi) => {
+	dispatch({
+		type: SHOW_TPI_SUCCESS,
+		payload: tpi
+	});
+};
+
+const showTPIFailed = (dispatch) => {
+	dispatch({
+		type: SHOW_TPI_FAILED
+	});
+};
+
 const generateAddMultipleCustomerHash = (session, option, day, selectedCustomers) => {
 	hash = [];
 	for (var i in selectedCustomers) {
@@ -98,12 +116,29 @@ export const showTourPartyInfo = () => {
 	}
 };
 
+export const onTourGroupCustomerSelected = (booking, customer) => {
+	return (dispatch) => {
+		dispatch({ type: BOOKING_SELECTED, payload: booking});
+		dispatch({ type: CUSTOMER_SELECTED, payload: customer });
+		Actions.tourGroupCustomerDetail();
+	}
+};
+
 export const showItineraries = ({ tourCode, session }) => {
 	return (dispatch) => {
 		dispatch({ type: SHOW_ITINERARIES });
 		axios.get(BASE_URL+`/api/tour_info/tour_groups/getItineraryByTourCode?tour_code=${tourCode}`, { headers: { email: session.email, token: session.token } })
 			.then(response => showItinerariesSuccess(dispatch, response.data["tour_info/days"]))
 			.catch(error => showItinerariesFail(dispatch));
+	}
+};
+
+export const showTPI = ({ tourCode, session }) => {
+	return (dispatch) => {
+		dispatch({ type: SHOW_TPI });
+		axios.get(BASE_URL+`/api/tour_info/tour_groups?code=${tourCode}`, { headers: { email: session.email, token: session.token } })
+			.then(response => showTPISuccess(dispatch, response.data["tour_info/tour_group"]))
+			.catch(error => showTPIFailed(dispatch));
 	}
 };
 

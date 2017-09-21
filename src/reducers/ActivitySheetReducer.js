@@ -11,7 +11,10 @@ import { SHOW_ITINERARIES,
 				 ON_ROAD_CUSTOMERS_FETCH_SUCCESS,
 				 TOGGLE_CUSTOMER,
 				 ADD_MULTIPLE_CUSTOMERS,
-				 ADD_MULTIPLE_CUSTOMERS_SUCCESS
+				 ADD_MULTIPLE_CUSTOMERS_SUCCESS,
+				 SHOW_TPI,
+				 SHOW_TPI_SUCCESS,
+				 SHOW_TPI_FAILED
 				} from '../actions/types';
 
 const INITIAL_STATE = {itineraries: [],  
@@ -24,7 +27,8 @@ const INITIAL_STATE = {itineraries: [],
 												customers: [],
 												onRoadCustomers: [],
 												error: '',
-												selectedCustomers: []};
+												selectedCustomers: [],
+												tpi: null};
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
@@ -52,6 +56,12 @@ export default (state = INITIAL_STATE, action) => {
 			return { ...state, loading: true }
 		case ADD_MULTIPLE_CUSTOMERS_SUCCESS:
 			return { ...state, loading: false }
+		case SHOW_TPI:
+			return { ...state, loading: true }
+		case SHOW_TPI_SUCCESS:
+			return { ...state, loading: false, tpi: action.payload}
+		case SHOW_TPI_FAILED:
+			return { ...state, loading: false, error: 'Sorry, there is not Tour Party Info yet'}
 		case ON_ROAD_CUSTOMERS_FETCH_SUCCESS:
 			var tmp_on_road_customer = [];
 			for (var i in action.payload) {

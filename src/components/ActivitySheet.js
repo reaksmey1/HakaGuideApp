@@ -18,7 +18,7 @@ import { Container,
 import { showTourPartyInfo, 
 					tourGroupChanged, 
 					showItineraries, 
-					onTourGroupItinerarySelected } from '../actions';
+					onTourGroupItinerarySelected, onBookingPress } from '../actions';
 
 class ActivitySheet extends Component {
 	onTourPartyInfoPress() {
@@ -27,6 +27,10 @@ class ActivitySheet extends Component {
 
 	onTourGroupChange(text) {
 		this.props.tourGroupChanged(text);
+	}
+
+	onTPIPress() {
+		this.props.onBookingPress();
 	}
 
 	onSearchButtonPress() {
@@ -84,11 +88,15 @@ class ActivitySheet extends Component {
           <FooterTab>
             <Button onPress={this.onTourPartyInfoPress.bind(this)}>
             	<Icon name="ios-subway" />
-              <Text>Tour Party Info</Text>
+              <Text>Customers</Text>
             </Button>
             <Button active>
             	<Icon name="ios-american-football" />
-              <Text>Activities Sheet</Text>
+              <Text>Activities</Text>
+            </Button>
+            <Button onPress={this.onTPIPress.bind(this)}>
+            	<Icon name="ios-paper" />
+              <Text>TPI</Text>
             </Button>
           </FooterTab>
         </Footer>
@@ -115,4 +123,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { showTourPartyInfo, tourGroupChanged, showItineraries, onTourGroupItinerarySelected })(ActivitySheet);
+export default connect(mapStateToProps, { showTourPartyInfo, tourGroupChanged, showItineraries, onTourGroupItinerarySelected, onBookingPress })(ActivitySheet);

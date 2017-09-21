@@ -59,7 +59,7 @@ const mapStateToProps = state => {
 	return {
 		activities: state.activity.activities,
 		session: state.auth.session,
-		booking_id: state.tourParty.selectedCustomer.booking_id
+		booking_id: state.tourParty.selectedBooking.id
 	};
 };
 

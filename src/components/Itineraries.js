@@ -46,7 +46,7 @@ const mapStateToProps = state => {
 	return {
 		days: state.activity.days,
 		session: state.auth.session,
-		tour_id: state.tourParty.selectedCustomer.links.tour_id
+		tour_id: state.tourParty.selectedBooking.tour_id
 	};
 };
 

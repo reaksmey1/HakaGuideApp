@@ -16,6 +16,7 @@ import CheckoutPage from './components/CheckoutPage';
 import CheckoutOptions from './components/CheckoutOptions';
 import SplitPayment from './components/SplitPayment';
 import RefundRecipes from './components/RefundRecipes';
+import CustomerTourPartyInfo from './components/CustomerTourPartyInfo';
 
 const RouterComponent = () => {
 	return (
@@ -28,7 +29,7 @@ const RouterComponent = () => {
 				<Scene 
 					key="tourParty"
 					component={TourParty}
-					title="Tour Party Info"
+					title="Customers"
 					initial
 				/>
 				<Scene 
@@ -88,6 +89,15 @@ const RouterComponent = () => {
 				/>
 			</Scene>
 
+			<Scene key="customerTourPartyInfoMain">
+				<Scene
+					key="customerTourPartyInfo"
+					component={CustomerTourPartyInfo}
+					title="Tour Party Info"
+					initial
+				/>
+			</Scene>
+
 			<Scene key="activityMain">
 				<Scene
 					key="activitySheet"
@@ -116,6 +126,12 @@ const RouterComponent = () => {
 					key="tourGroupAddCustomers"
 					component={TourGroupAddCustomers}
 					title={this.title}
+				/>
+
+				<Scene
+					key="tourGroupCustomerDetail"
+					component={CustomerDetail}
+					title="Booked Activities"
 				/>
 
 			</Scene>

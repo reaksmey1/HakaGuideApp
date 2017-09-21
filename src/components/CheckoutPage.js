@@ -7,7 +7,7 @@ import { backToCustomerDetail } from '../actions';
 class CheckoutPage extends Component {
 	whenNavigationStateChanges(navState){
 		console.log(navState);
-		if (navState.title == "New Zealand Tours - Small Group Adventures and Holidays") {
+		if (navState.title == "Your Bookings | Haka Tours") {
 			this.props.backToCustomerDetail();
 		}
     // var navigator = this.props.navigator;

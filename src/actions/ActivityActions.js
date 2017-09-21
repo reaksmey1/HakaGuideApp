@@ -76,12 +76,19 @@ const activityRefundSuccess = (dispatch) => {
 	Actions.customerDetail();
 };
 
-export const bookedActivitiesFetch = (customer, session) => {
+export const bookedActivitiesFetch = (booking, customer, session) => {
+	console.log(customer);
 	return (dispatch) => {
 		dispatch({ type:  SHOW_BOOKED_ACTIVITIES});
-		axios.get(BASE_URL+`/api/bookings/bookings/${customer.booking_id}/getActivitiesByTraveller?traveller_id=${customer.id}`, { headers: { email: session.email, token: session.token } })
+		if (customer._id) {
+			axios.get(BASE_URL+`/api/bookings/bookings/${booking.id}/getActivitiesByTraveller?traveller_id=${customer._id}`, { headers: { email: session.email, token: session.token } })
 			.then(response => showBookedActivitiesSuccess(dispatch, response.data))
 			.catch(error => showBookedActivitiesFail(dispatch));
+		} else {
+			axios.get(BASE_URL+`/api/bookings/bookings/${booking}/getActivitiesByTraveller?traveller_id=${customer}`, { headers: { email: session.email, token: session.token } })
+			.then(response => showBookedActivitiesSuccess(dispatch, response.data))
+			.catch(error => showBookedActivitiesFail(dispatch));
+		}
 	}
 };
 
@@ -109,10 +116,10 @@ export const onActivitySelected = (activity, booking_id, session) => {
 	}
 };
 
-export const onOptionSelected = (option, day, session, customer) => {
+export const onOptionSelected = (option, day, session, customer, booking_id) => {
 	return (dispatch) => {
 		dispatch({ type: OPTION_SELECTED, payload: option});
-		axios.get(BASE_URL+`/api/bookings/bookings/${customer.booking_id}/addAddon?traveller=${customer.id}&option=${option.id}&day=${day.id}&user=${session.email}`, { headers: { email: session.email, token: session.token } })
+		axios.get(BASE_URL+`/api/bookings/bookings/${booking_id}/addAddon?traveller=${customer._id}&option=${option.id}&day=${day.id}&user=${session.email}`, { headers: { email: session.email, token: session.token } })
 			.then(response => addOptionSuccess(dispatch))
 	}
 }

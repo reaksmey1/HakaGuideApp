@@ -29,7 +29,7 @@ export const onCheckoutPress = (session, traveller) => {
 
 export const backToCustomerDetail = () => {
 	return (dispatch) => {
-		Actions.customerDetail();
+		Actions.customerDetail({type: 'reset'});
 	}
 };
 

@@ -16,7 +16,7 @@ import { Container,
 					List, 
 					ListItem,
 					Right } from 'native-base';
-import { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet} from '../actions';
+import { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet, onBookingPress} from '../actions';
 
 class TourParty extends Component {
 	onTourGroupChange(text) {
@@ -34,6 +34,52 @@ class TourParty extends Component {
 
 	onShowActivitySheetPress() {
 		this.props.showActivitySheet();
+	}
+
+	onTPIPress() {
+		this.props.onBookingPress();
+	}
+
+	renderCustomerList(customer) {
+		return(
+			customer.links.travellers_list.map(traveller => 
+				<ListItem key={traveller._id} onPress={() => this.props.onCustomerSelected(customer, traveller)}>
+					<Body>
+		      	<Text style={styles.customerHeader}>{ traveller.title }: { traveller.first_name } { traveller.last_name }</Text>
+		  			<Text style={styles.customerSubHeader}>{ customer.tour_name } </Text>
+	          <Text style={styles.customerDetails}> Nationality: { traveller.nationality } </Text>
+	          <Text style={styles.customerDetails}> Date Of Birth: { traveller.date_of_birth } </Text>
+		  		</Body>
+		  		<Right>
+	          <Icon name="arrow-forward" />
+	        </Right>
+		  	</ListItem>
+			)
+		);
+	}
+
+	renderBookings() {
+		if (this.props.loading) {
+			return <Spinner size='large' />;
+		}
+
+		if (this.props.error) {
+			return <Text style={styles.errorText}> { this.props.error } </Text>;
+		}
+		if (this.props.customers.length > 0) {
+			return(
+				this.props.customers.map(customer =>
+				<List key={customer.id}>				
+          <ListItem itemDivider>
+          	<Body>
+            	<Text>{customer.reference_code}</Text>
+          	</Body>
+          </ListItem>
+          {this.renderCustomerList(customer)}                  
+      	</List>
+      	)
+			);
+		}
 	}
 
 	renderCustomers() {
@@ -83,17 +129,21 @@ class TourParty extends Component {
           </Button>
         </Header>
         <Content> 
-					{this.renderCustomers()}
+        	{this.renderBookings()}
 	     </Content>
 	     <Footer>
           <FooterTab>
             <Button active>
             	<Icon name="ios-subway" />
-              <Text>Tour Party Info</Text>
+              <Text>Customers</Text>
             </Button>
             <Button onPress={this.onShowActivitySheetPress.bind(this)}>
             	<Icon name="ios-american-football" />
-              <Text>Activities Sheet</Text>
+              <Text>Activities</Text>
+            </Button>
+            <Button onPress={this.onTPIPress.bind(this)}>
+            	<Icon name="ios-paper" />
+              <Text>TPI</Text>
             </Button>
           </FooterTab>
         </Footer>
@@ -129,13 +179,11 @@ const styles = {
 	},
 
 	customerSubHeader: {
-		fontSize: 16,
-		marginBottom: 5
+		fontSize: 16
 	},
 
 	customerHeader: {
-		color: 'green',
-		marginBottom: 5
+		color: 'green'
 	}
 };
 
@@ -149,4 +197,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet })(TourParty);
+export default connect(mapStateToProps, { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet, onBookingPress })(TourParty);

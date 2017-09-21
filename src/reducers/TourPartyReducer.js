@@ -2,15 +2,17 @@ import { TOUR_GROUP_CHANGED,
 				 SHOW_CUSTOMERS,
 				 SHOW_CUSTOMERS_SUCCESS,
 				 SHOW_CUSTOMERS_FAIL,
-				 CUSTOMER_SELECTED
+				 CUSTOMER_SELECTED,
+				 BOOKING_SELECTED
 				} from '../actions/types';
 
 const INITIAL_STATE = {tourCode: '', 
-												customers: [], 
+												customers: [],
 												days: [], 
 												loading: false, 
 												error: '', 
-												selectedCustomer: null};
+												selectedCustomer: null,
+												selectedBooking: null};
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
@@ -24,6 +26,8 @@ export default (state = INITIAL_STATE, action) => {
 			return { ...state, loading: false, customers: [], error: 'Something went wrong ! Please check your internet connection and try again' }
 		case CUSTOMER_SELECTED:
 			return { ...state, selectedCustomer: action.payload }
+		case BOOKING_SELECTED:
+			return { ...state, selectedBooking: action.payload }
 		default:
 			return state;
 	}
