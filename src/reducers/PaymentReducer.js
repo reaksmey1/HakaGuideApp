@@ -15,7 +15,6 @@ export default (state = INITIAL_STATE, action) => {
 		case SHOW_CHECKOUT_PAGE_FAIL:
 			return { ...state, error: "Something went wrong !" }
 		case AMOUNT_CHANGED:
-			console.log(action.payload);
 			return { ...state, amount: action.payload }
 		default:
 			return state;

@@ -28,7 +28,15 @@ export default (state = INITIAL_STATE, action) => {
 		case SHOW_BOOKED_ACTIVITIES:
 			return { ...state, loading: true }
 		case SHOW_BOOKED_ACTIVITIES_SUCCESS:
-			return { ...state, loading: false, selectedTraveller: action.payload["bookings/traveller"], bookedActivities: action.payload["bookings/addons"] }
+			var tmp_booked_activities = [];
+			for (var i in action.payload["bookings/addons"]) {
+				var el = action.payload["bookings/addons"][i]
+			  if (el["refunded"] == false) {
+			  	tmp_booked_activities.push(el);
+		  	}
+			}
+
+			return { ...state, loading: false, selectedTraveller: action.payload["bookings/traveller"], bookedActivities: tmp_booked_activities }
 		case SHOW_BOOKED_ACTIVITIES_FAIL:
 			return { ...state, error: 'Something went wrong' }
 		case ITINERARIES_FETCH:

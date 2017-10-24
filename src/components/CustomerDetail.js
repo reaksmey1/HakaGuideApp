@@ -50,7 +50,7 @@ class CustomerDetail extends Component {
     }
 		return (
 			this.props.bookedActivities.map(addon => 
-        <ListItem key={addon.id} onPress={() => this.props.onActivityRefund(addon, this.props.session, this.props.customer)}>
+        <ListItem key={addon.id} onPress={() => this.props.onActivityRefund(addon, this.props.session, this.props.customer, this.props.booking)}>
         	<Body>
           	<Text style={styles.addonHeader}>{addon.name}</Text>
           	<Text style={styles.addonDetails}>{addon.links.option_name}</Text>
