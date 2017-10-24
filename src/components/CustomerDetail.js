@@ -57,7 +57,7 @@ class CustomerDetail extends Component {
           	<Text style={styles.addonDetails}>Price: ${addon.price}</Text>
         	</Body>
         	<Right>
-	          <Icon style={{color: 'red', fontSize: 30}} name="ios-trash" />
+	          <Icon style={{color: 'red', fontSize: 30}} name="ios-swap-outline" />
 	        </Right>
         </ListItem>
       )
