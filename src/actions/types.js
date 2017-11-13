@@ -45,3 +45,5 @@ export const BOOKING_SELECTED = "bookingSelected";
 export const SHOW_TPI = "showingTPI";
 export const SHOW_TPI_SUCCESS = "showingTPISuccess";
 export const SHOW_TPI_FAILED = "showingTPIFailed";
+export const ADHOC_AMOUNT_CHANGED = "adhocAmountChanged";
+export const ADHOC_NAME_CHANGED = "adhocNameChanged";

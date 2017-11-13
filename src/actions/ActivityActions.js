@@ -121,7 +121,7 @@ export const onOptionSelected = (option, day, session, customer, booking_id) => 
 		axios.get(BASE_URL+`/api/bookings/bookings/${booking_id}/addAddon?traveller=${customer._id}&option=${option.id}&day=${day.id}&user=${session.email}`, { headers: { email: session.email, token: session.token } })
 			.then(response => addOptionSuccess(dispatch))
 	}
-}
+};
 
 export const onActivityRefund = (addon, session, customer, booking) => {
 	return (dispatch) => {
@@ -132,4 +132,16 @@ export const onActivityRefund = (addon, session, customer, booking) => {
 					.then(response => showBookedActivitiesSuccess(dispatch, response.data))
 				)
 	}
-}
+};
+
+export const onAddActivities = () => {
+	return (dispatch) => {
+		Actions.itineraries({title: 'Tour Itineraries'});
+	}
+};
+
+export const onAddAdhoc = () => {
+	return (dispatch) => {
+		Actions.adhoc();
+	}
+};

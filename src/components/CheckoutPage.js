@@ -6,8 +6,7 @@ import { backToCustomerDetail } from '../actions';
 
 class CheckoutPage extends Component {
 	whenNavigationStateChanges(navState){
-		console.log(navState);
-		if (navState.title == "Your Bookings | Haka Tours") {
+		if (navState.title == "" && navState.url.indexOf("update_from_app") > 0) {
 			this.props.backToCustomerDetail();
 		}
     // var navigator = this.props.navigator;

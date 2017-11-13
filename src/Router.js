@@ -17,6 +17,8 @@ import CheckoutOptions from './components/CheckoutOptions';
 import SplitPayment from './components/SplitPayment';
 import RefundRecipes from './components/RefundRecipes';
 import CustomerTourPartyInfo from './components/CustomerTourPartyInfo';
+import AddOptions from './components/AddOptions';
+import AdHoc from './components/AdHoc';
 
 const RouterComponent = () => {
 	return (
@@ -40,16 +42,28 @@ const RouterComponent = () => {
 				<Scene
 					key="customerDetail"
 					onLeft={() => Actions.tourParty()}
-					onRight={() => Actions.itineraries({title: 'Tour Itineraries'})} 
+					onRight={() => Actions.addOptions()}
+					// onRight={() => Actions.itineraries({title: 'Tour Itineraries'})} 
 					rightTitle="Add"
 					leftTitle="TPI"
 					component={CustomerDetail}
 					title="Booked Activities"
 				/>
+				<Scene 
+					key="addOptions"
+					component={AddOptions}
+					title="Choose Add Options"
+				/>
 				<Scene
 					key="itineraries"
 					component={Itineraries}
 					title={this.title}
+				/>
+
+				<Scene 
+					key="adhoc"
+					component={AdHoc}
+					title="AdHoc"
 				/>
 
 				<Scene

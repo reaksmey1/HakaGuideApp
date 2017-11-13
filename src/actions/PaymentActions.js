@@ -10,7 +10,7 @@ import { SHOW_CHECKOUT_PAGE,
 const showCheckoutSuccess = (dispatch, payment) => {
 	dispatch({
 		type: SHOW_CHECKOUT_PAGE_SUCCESS,
-		payload: payment.payment_page_url
+		payload: payment.app_payment_page_url
 	});
 	Actions.checkoutPage();
 };
@@ -29,7 +29,7 @@ export const onCheckoutPress = (session, traveller) => {
 
 export const backToCustomerDetail = () => {
 	return (dispatch) => {
-		Actions.customerDetail({type: 'reset'});
+		Actions.customerDetail({refresh: true});
 	}
 };
 

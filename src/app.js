@@ -6,10 +6,12 @@ import reducers from './reducers';
 import Router from './Router';
 import { Container, Header, Item, Input, Icon, Button, Text } from 'native-base';
 
+store = createStore(reducers, {}, applyMiddleware(ReduxThunk))
+
 class App extends Component {
 	render() {
 		return (
-			<Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
+			<Provider store={store}>
 				<Router />
 			</Provider>
 		);
