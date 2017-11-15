@@ -46,7 +46,6 @@ class TourParty extends Component {
 				<ListItem key={traveller._id} onPress={() => this.props.onCustomerSelected(customer, traveller)}>
 					<Body>
 		      	<Text style={styles.customerHeader}>{ traveller.title }: { traveller.first_name } { traveller.last_name }</Text>
-		  			<Text style={styles.customerSubHeader}>{ customer.tour_name } </Text>
 	          <Text style={styles.customerDetails}> Nationality: { traveller.nationality } </Text>
 	          <Text style={styles.customerDetails}> Date Of Birth: { traveller.date_of_birth } </Text>
 		  		</Body>
@@ -72,7 +71,7 @@ class TourParty extends Component {
 				<List key={customer.id}>				
           <ListItem itemDivider>
           	<Body>
-            	<Text>{customer.reference_code}</Text>
+            	<Text>{customer.links.tour_name}</Text>
           	</Body>
           </ListItem>
           {this.renderCustomerList(customer)}                  
@@ -80,34 +79,6 @@ class TourParty extends Component {
       	)
 			);
 		}
-	}
-
-	renderCustomers() {
-		if (this.props.loading) {
-			return <Spinner size='large' />;
-		}
-
-		if (this.props.error) {
-			return <Text style={styles.errorText}> { this.props.error } </Text>;
-		}
-
-		return (
-			<List dataArray={this.props.customers}
-	      renderRow={(customer) =>
-	        <ListItem onPress={() => this.props.onCustomerSelected(customer)}>
-	        	<Body>
-		          <Text style={styles.customerHeader}>{ customer.title }: { customer.first_name } { customer.last_name }</Text>
-		          <Text style={styles.customerSubHeader}>{ customer.links.tour_name } </Text>
-		          <Text style={styles.customerDetails}> Nationality: { customer.nationality } </Text>
-		          <Text style={styles.customerDetails}> Date Of Birth: { customer.date_of_birth } </Text>
-	          </Body>
-	          <Right>
-		          <Icon name="arrow-forward" />
-		        </Right>
-	        </ListItem>
-	      }>
-	    </List>
-    );
 	}
 
 	render() {
@@ -179,11 +150,13 @@ const styles = {
 	},
 
 	customerSubHeader: {
-		fontSize: 16
+		fontSize: 14,
+		marginBottom: 5
 	},
 
 	customerHeader: {
-		color: 'green'
+		color: 'green',
+		marginBottom: 5
 	}
 };
 

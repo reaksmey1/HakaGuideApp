@@ -19,6 +19,7 @@ import RefundRecipes from './components/RefundRecipes';
 import CustomerTourPartyInfo from './components/CustomerTourPartyInfo';
 import AddOptions from './components/AddOptions';
 import AdHoc from './components/AdHoc';
+import PayByCash from './components/PayByCash';
 
 const RouterComponent = () => {
 	return (
@@ -93,7 +94,13 @@ const RouterComponent = () => {
 				<Scene
 					key="splitPayment"
 					component={SplitPayment}
-					title="SplitPayment"
+					title="Split Payment"
+				/>
+
+				<Scene
+					key="payByCash"
+					component={PayByCash}
+					title="Pay By Cash"
 				/>
 
 				<Scene

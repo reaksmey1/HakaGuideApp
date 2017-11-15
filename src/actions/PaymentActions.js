@@ -4,7 +4,9 @@ import { BASE_URL } from './config';
 import { SHOW_CHECKOUT_PAGE, 
 				 SHOW_CHECKOUT_PAGE_SUCCESS,
 				 SHOW_CHECKOUT_PAGE_FAIL,
-				 AMOUNT_CHANGED } from './types';
+				 AMOUNT_CHANGED,
+				 CASH_AMOUNT_CHANGED,
+				 SHOW_BOOKED_ACTIVITIES_SUCCESS } from './types';
 
 
 const showCheckoutSuccess = (dispatch, payment) => {
@@ -39,6 +41,12 @@ export const onSplitPaymentPress = () => {
 	}
 };
 
+export const onPayByCashPress = () => {
+	return (dispatch) => {
+		Actions.payByCash();
+	}
+};
+
 export const onAmountChange = (text) => {
 	return {
 		type: AMOUNT_CHANGED,
@@ -46,9 +54,43 @@ export const onAmountChange = (text) => {
 	};
 };
 
+export const onCashAmountChange = (text) => {
+	return {
+		type: CASH_AMOUNT_CHANGED,
+		payload: text
+	};
+};
+
 export const onRefundPagePress = () => {
 	return (dispatch) => {
 		Actions.refundRecipes();
+	}
+};
+
+// export const onPayByCashConfirmed = (session, traveller, amount) => {
+// 	return (dispatch) => {
+// 		axios({
+// 			method: 'post'
+// 		})
+// 	}
+// };
+
+const showBookedActivitiesSuccess = (dispatch, response) => {
+	dispatch({
+		type: SHOW_BOOKED_ACTIVITIES_SUCCESS,
+		payload: response
+	});
+	Actions.customerDetail();
+};
+
+export const onPayByCashConfirmed = (details, amount, session, booking_id, traveller) => {
+	return (dispatch) => {
+		paid_by = 'Cash Payment - '+traveller.first_name;
+		axios.get(BASE_URL+`/api/bookings/bookings/${booking_id}/payByCash?details=${paid_by}&amount=${amount}&user=${session.email}`, { headers: { email: session.email, token: session.token } })
+			.then(
+				axios.get(BASE_URL+`/api/bookings/bookings/${booking_id}/getActivitiesByTraveller?traveller_id=${traveller.id}`, { headers: { email: session.email, token: session.token } })
+					.then(response => showBookedActivitiesSuccess(dispatch, response.data))
+				)
 	}
 };
 

@@ -1,10 +1,11 @@
 import { SHOW_CHECKOUT_PAGE,
 				 SHOW_CHECKOUT_PAGE_SUCCESS,
 				 SHOW_CHECKOUT_PAGE_FAIL,
-				 AMOUNT_CHANGED
+				 AMOUNT_CHANGED,
+				 CASH_AMOUNT_CHANGED
 				} from '../actions/types';
 
-const INITIAL_STATE = {loading: false, payment_page_url: null, error: null, amount: ""};
+const INITIAL_STATE = {loading: false, payment_page_url: null, error: null, amount: "", cashAmount: ""};
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
@@ -16,6 +17,8 @@ export default (state = INITIAL_STATE, action) => {
 			return { ...state, error: "Something went wrong !" }
 		case AMOUNT_CHANGED:
 			return { ...state, amount: action.payload }
+		case CASH_AMOUNT_CHANGED:
+			return { ...state, cashAmount: action.payload }
 		default:
 			return state;
 	}

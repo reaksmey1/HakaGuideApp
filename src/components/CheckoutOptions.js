@@ -12,7 +12,7 @@ import { Container,
 					ListItem, 
 					Icon,
 					Spinner, Button } from 'native-base';
-import { onPayFullAmountPress, onSplitPaymentPress, onRefundPagePress } from '../actions';
+import { onPayFullAmountPress, onSplitPaymentPress, onPayByCashPress, onRefundPagePress } from '../actions';
 
 class CheckoutOptions extends Component {
 	render(){
@@ -20,8 +20,9 @@ class CheckoutOptions extends Component {
 			<Container>
 				<Content>
 					<Body>
-						<Button primary style={styles.checkoutBtn} onPress={() => this.props.onPayFullAmountPress(this.props.session, this.props.selectedTraveller)}><Text> Pay Full Amount ( NZD{ this.props.selectedTraveller.links.balance_remaining } ) </Text></Button>
-						<Button warning style={styles.checkoutBtn} onPress={() => this.props.onSplitPaymentPress()}><Text> Split Payment </Text></Button>
+						<Button primary style={styles.checkoutBtn} onPress={() => this.props.onPayFullAmountPress(this.props.session, this.props.selectedTraveller)}><Text> PAY FULL AMOUNT { this.props.selectedTraveller.links.balance_remaining } NZD </Text></Button>
+						<Button primary style={styles.checkoutBtn} onPress={() => this.props.onSplitPaymentPress()}><Text> SPLIT PAYMENT </Text></Button>
+						<Button warning style={styles.checkoutBtn} onPress={() => this.props.onPayByCashPress()}><Text> PAY BY CASH </Text></Button>
 					</Body>
 				</Content>
 			</Container>
@@ -43,4 +44,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { onPayFullAmountPress, onSplitPaymentPress, onRefundPagePress })(CheckoutOptions);
+export default connect(mapStateToProps, { onPayFullAmountPress, onSplitPaymentPress, onPayByCashPress, onRefundPagePress })(CheckoutOptions);

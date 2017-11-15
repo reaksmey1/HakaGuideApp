@@ -9,17 +9,9 @@ class CheckoutPage extends Component {
 		if (navState.title == "" && navState.url.indexOf("update_from_app") > 0) {
 			this.props.backToCustomerDetail();
 		}
-    // var navigator = this.props.navigator;
-    // var parsed = Url.parse(navState.url, true);
-    // console.log(parsed.hostname);
-    // if (parsed.hostname == 'YOUR_HOSTNAME'){
-    //   console.log("Event is: " + parsed.query.event);
-    //   navigator.pop();
-    // }
   }
 
 	renderPage() {
-		console.log(this.props);
 		if (this.props.loading) {
       return <Content><Spinner size='large' /></Content>;
     }
@@ -40,32 +32,6 @@ class CheckoutPage extends Component {
 		)
 	}
 }
-
-// render() {
-//     var recipientViewURL = this.props.route.data.url;
-//     console.log('Recipient URL is: ' + recipientViewURL);
-//     return (
-//       <View style={styles.container}>
-//         <WebView
-//           source={{uri: recipientViewURL, method: 'GET'}}
-//           scalesPageToFit={true}
-//           javaScriptEnabled={true}
-//           domStorageEnabled={true}
-//           onNavigationStateChange={this.whenNavigationStateChanges.bind(this)}
-//         >
-//       </WebView>
-//       </View>
-//     );
-//   }
-
-  // whenNavigationStateChanges(navState){
-  //   var navigator = this.props.navigator;
-  //   var parsed = Url.parse(navState.url, true);
-  //   if (parsed.hostname == 'YOUR_HOSTNAME'){
-  //     console.log("Event is: " + parsed.query.event);
-  //     navigator.pop();
-  //   }
-  // }
 
 const mapStateToProps = state => {
 	return {
