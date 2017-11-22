@@ -25,7 +25,7 @@ class SplitPayment extends Component {
 			<Container>
 				<Header>
 					<View>
-						<Text> Please Enter Amount You Want To Pay </Text>
+						<Text> Please confirmed the Surcharge </Text>
 					</View>
 				</Header>
 				<Content>

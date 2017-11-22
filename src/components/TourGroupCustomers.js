@@ -29,10 +29,9 @@ class TourGroupCustomers extends Component {
 		if (this.props.loading) {
       return <Spinner size='large' />;
     }
-    console.log(this.props.customers);
 		return (
 			this.props.customers.map(customer => 
-        <ListItem key={customer.id} onPress={() => this.props.onTourGroupCustomerSelected(customer.booking_id, customer.id)}>
+        <ListItem key={customer.id} onPress={() => this.props.onTourGroupCustomerSelected(this.props.session, customer.booking_id, customer.id)}>
         	<Body>
           	<Text style={styles.optionHeader}>{ customer.title }: {customer.first_name} {customer.last_name} </Text>
           	<Text style={styles.optionDetails}>{ customer.links.tour_name }</Text>

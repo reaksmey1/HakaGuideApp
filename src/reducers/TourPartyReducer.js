@@ -3,7 +3,8 @@ import { TOUR_GROUP_CHANGED,
 				 SHOW_CUSTOMERS_SUCCESS,
 				 SHOW_CUSTOMERS_FAIL,
 				 CUSTOMER_SELECTED,
-				 BOOKING_SELECTED
+				 BOOKING_SELECTED,
+				 GET_BOOKING_SUCCESS
 				} from '../actions/types';
 
 const INITIAL_STATE = {tourCode: '', 
@@ -28,6 +29,8 @@ export default (state = INITIAL_STATE, action) => {
 			return { ...state, selectedCustomer: action.payload }
 		case BOOKING_SELECTED:
 			return { ...state, selectedBooking: action.payload }
+		case GET_BOOKING_SUCCESS:
+			return { ...state }
 		default:
 			return state;
 	}

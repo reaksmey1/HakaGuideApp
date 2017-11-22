@@ -21,6 +21,12 @@ import { MarkdownView } from 'react-native-markdown-view'
 import { showActivitySheet, showTourPartyInfo, tourGroupChanged, showTPI} from '../actions';
 
 class CustomerTourPartyInfo extends Component {
+
+  componentWillMount() {
+    const { tourCode, session } = this.props;
+    this.props.showTPI({ tourCode, session });
+  }
+
 	onTourPartyInfoPress() {
 		this.props.showTourPartyInfo();
 	}

@@ -19,6 +19,14 @@ import { Container,
 import { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet, onBookingPress} from '../actions';
 
 class TourParty extends Component {
+	componentWillMount() {
+    const { tourCode, session } = this.props;
+    if (tourCode) {
+			this.props.showCustomers({ tourCode, session });
+		}
+  }
+
+
 	onTourGroupChange(text) {
 		this.props.tourGroupChanged(text);
 	}

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, 
 					Header, 
-					Item, 
-					View, 
 					Text, 
 					Right, 
 					Body, 
@@ -11,8 +9,8 @@ import { Container,
 					List, 
 					ListItem, 
 					Icon,
-					Spinner, Button } from 'native-base';
-import { bookedActivitiesFetch, onActivityRefund, onCheckoutPress } from '../actions';
+					Spinner, Button, Footer, FooterTab } from 'native-base';
+import { bookedActivitiesFetch, onActivityRefund, onCheckoutPress, showPaymentHistories } from '../actions';
 
 class CustomerDetail extends Component {
 
@@ -22,8 +20,12 @@ class CustomerDetail extends Component {
 
 	renderPayButton(){
 		if (this.props.selectedTraveller.links.balance_remaining > 0) {
-			return <Button primary style={styles.checkoutButton} onPress={() => this.props.onCheckoutPress(this.props.session, this.props.selectedTraveller)}><Text> Pay </Text></Button>;
+			return <Button primary style={styles.checkoutButton} onPress={() => this.props.onCheckoutPress(this.props.session, this.props.selectedTraveller)}><Text> PAY </Text></Button>;
 		}
+	}
+
+	onShowPaymentHistoriesPress() {
+		this.props.showPaymentHistories();
 	}
 
 	renderHeader() {
@@ -36,7 +38,7 @@ class CustomerDetail extends Component {
 	      <Text style={styles.titleSubHeader}> 
 	      	Paid: ${ this.props.selectedTraveller.links.total_paid } of ${ this.props.selectedTraveller.links.total } 
 	      	<Text style={{color: 'red'}}> 
-	      		( ${ this.props.selectedTraveller.links.balance_remaining } Left ) 
+	      		( ${ this.props.selectedTraveller.links.balance_remaining.toFixed(2) } Left ) 
       		</Text> 
     		</Text>
     		{this.renderPayButton()}
@@ -73,6 +75,18 @@ class CustomerDetail extends Component {
 				<Content>
 					{this.renderContent()}
 				</Content>
+				<Footer>
+          <FooterTab>
+            <Button active>
+            	<Icon name="ios-american-football" />
+              <Text>Booked Activities</Text>
+            </Button>
+            <Button onPress={this.onShowPaymentHistoriesPress.bind(this)}>
+            	<Icon name="ios-cash" />
+              <Text>Payment Histories</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
 			</Container>
 		)
 	}
@@ -114,5 +128,5 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { bookedActivitiesFetch, onActivityRefund, onCheckoutPress })(CustomerDetail);
+export default connect(mapStateToProps, { bookedActivitiesFetch, onActivityRefund, onCheckoutPress, showPaymentHistories })(CustomerDetail);
 

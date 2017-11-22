@@ -20,6 +20,9 @@ import CustomerTourPartyInfo from './components/CustomerTourPartyInfo';
 import AddOptions from './components/AddOptions';
 import AdHoc from './components/AdHoc';
 import PayByCash from './components/PayByCash';
+import PaymentHistory from './components/PaymentHistory';
+import FullPayment from './components/FullPayment';
+import PaymentResult from './components/PaymentResult';
 
 const RouterComponent = () => {
 	return (
@@ -28,27 +31,23 @@ const RouterComponent = () => {
 				<Scene key="login" component={LoginForm} hideNavBar />
 			</Scene>
 
-			<Scene key="main">
+			<Scene key="paymentResultMain">
 				<Scene 
-					key="tourParty"
-					component={TourParty}
-					title="Customers"
-					initial
+					key="paymentResult"
+					component={PaymentResult}
 				/>
-				<Scene 
-					key="customerList"
-					component={CustomerList}
-					title="Customer List"
-				/>
+			</Scene>
+
+			<Scene key="customerMain">
 				<Scene
 					key="customerDetail"
-					onLeft={() => Actions.tourParty()}
+					onLeft={() => Actions.main({type: 'reset'})}
 					onRight={() => Actions.addOptions()}
-					// onRight={() => Actions.itineraries({title: 'Tour Itineraries'})} 
 					rightTitle="Add"
 					leftTitle="TPI"
 					component={CustomerDetail}
 					title="Booked Activities"
+					initial
 				/>
 				<Scene 
 					key="addOptions"
@@ -94,7 +93,13 @@ const RouterComponent = () => {
 				<Scene
 					key="splitPayment"
 					component={SplitPayment}
-					title="Split Payment"
+					title="Pay Partial Amount"
+				/>
+
+				<Scene
+					key="fullPayment"
+					component={FullPayment}
+					title="Pay Full Amount"
 				/>
 
 				<Scene
@@ -110,8 +115,28 @@ const RouterComponent = () => {
 				/>
 			</Scene>
 
-			<Scene key="customerTourPartyInfoMain">
+			<Scene key="main">
+				<Scene 
+					key="tourParty"
+					component={TourParty}
+					title="Customers"
+					initial
+				/>
+			</Scene>
+
+			<Scene key="paymentHistoryMain">
 				<Scene
+					key="paymentHistory"
+					onLeft={() => Actions.main({type: 'reset'})}
+					leftTitle="TPI"
+					component={PaymentHistory}
+					title="Payment History"
+					initial
+				/>
+			</Scene>
+
+			<Scene key="customerTourPartyInfoMain">
+				<Scene 
 					key="customerTourPartyInfo"
 					component={CustomerTourPartyInfo}
 					title="Tour Party Info"

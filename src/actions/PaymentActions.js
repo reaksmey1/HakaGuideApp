@@ -6,13 +6,18 @@ import { SHOW_CHECKOUT_PAGE,
 				 SHOW_CHECKOUT_PAGE_FAIL,
 				 AMOUNT_CHANGED,
 				 CASH_AMOUNT_CHANGED,
-				 SHOW_BOOKED_ACTIVITIES_SUCCESS } from './types';
+				 SHOW_BOOKED_ACTIVITIES_SUCCESS,
+				 SURCHARGE_AMOUNT_CHANGED,
+				 SET_PAYMENT_RESULT,
+				 FETCH_PAYMENT_RESULT_SUCCESS,
+				 FETCHING_PAYMENT_HISTORIES,
+				 FETCH_PAYMENT_HISTORIES_SUCCESS } from './types';
 
 
 const showCheckoutSuccess = (dispatch, payment) => {
 	dispatch({
 		type: SHOW_CHECKOUT_PAGE_SUCCESS,
-		payload: payment.app_payment_page_url
+		payload: payment
 	});
 	Actions.checkoutPage();
 };
@@ -29,15 +34,22 @@ export const onCheckoutPress = (session, traveller) => {
 	}
 };
 
-export const backToCustomerDetail = () => {
+export const backToCustomerDetail = (traveller, session, booking_id) => {
 	return (dispatch) => {
-		Actions.customerDetail({refresh: true});
+		axios.get(BASE_URL+`/api/bookings/bookings/${booking_id}/getActivitiesByTraveller?traveller_id=${traveller.id}`, { headers: { email: session.email, token: session.token } })
+			.then(response => backToCustomerDetailSuccess(dispatch, response.data))
 	}
 };
 
 export const onSplitPaymentPress = () => {
 	return (dispatch) => {
 		Actions.splitPayment();
+	}
+};
+
+export const onPaymentHistoryPress = () => {
+	return (dispatch) => {
+		Actions.paymentHistory();
 	}
 };
 
@@ -54,6 +66,13 @@ export const onAmountChange = (text) => {
 	};
 };
 
+export const onSurchargeAmountChange = (text) => {
+	return {
+		type: SURCHARGE_AMOUNT_CHANGED,
+		payload: text
+	}
+};
+
 export const onCashAmountChange = (text) => {
 	return {
 		type: CASH_AMOUNT_CHANGED,
@@ -67,13 +86,13 @@ export const onRefundPagePress = () => {
 	}
 };
 
-// export const onPayByCashConfirmed = (session, traveller, amount) => {
-// 	return (dispatch) => {
-// 		axios({
-// 			method: 'post'
-// 		})
-// 	}
-// };
+const backToCustomerDetailSuccess = (dispatch, response) => {
+	dispatch({
+		type: SHOW_BOOKED_ACTIVITIES_SUCCESS,
+		payload: response
+	});
+	Actions.customerMain();
+};
 
 const showBookedActivitiesSuccess = (dispatch, response) => {
 	dispatch({
@@ -81,6 +100,36 @@ const showBookedActivitiesSuccess = (dispatch, response) => {
 		payload: response
 	});
 	Actions.customerDetail();
+};
+
+const fetchPaymentResultSuccess = (dispatch, response) => {
+	dispatch({
+		type: FETCH_PAYMENT_RESULT_SUCCESS,
+		payload: response
+	});
+	Actions.paymentResultMain({type: 'reset'});
+};
+
+const fetchPaymentHistorySuccess = (dispatch, response) => {
+	dispatch({
+		type: FETCH_PAYMENT_HISTORIES_SUCCESS,
+		payload: response
+	});
+};
+
+export const fetchPaymentResult = (result, payment_session_id, session) => {
+	return (dispatch) => {
+		axios.get(BASE_URL+`/api/payment_sessions/${payment_session_id}/update_from_app?result=${result}`, { headers: { email: session.email, token: session.token } })
+			.then(response => fetchPaymentResultSuccess(dispatch, response.data['payment_session']))
+	}
+};
+
+export const fetchPaymentHistories = (booking, session) => {
+	return (dispatch) => {
+		dispatch({ type: FETCHING_PAYMENT_HISTORIES });
+		axios.get(BASE_URL+`/api/bookings/bookings/${booking.id}`, { headers: { email: session.email, token: session.token } })
+			.then(response => fetchPaymentHistorySuccess(dispatch, response.data['bookings/booking']))
+	}
 };
 
 export const onPayByCashConfirmed = (details, amount, session, booking_id, traveller) => {
@@ -94,15 +143,18 @@ export const onPayByCashConfirmed = (details, amount, session, booking_id, trave
 	}
 };
 
-export const onSplitPaymentConfirmed = (session, traveller, amount) => {
+export const onSplitPaymentConfirmed = (session, traveller, amount, surchargeAmount, totalAmount) => {
 	return (dispatch) => {
+		dispatch({ type: SHOW_CHECKOUT_PAGE });
 		axios({
 		  method: 'post',
 		  url: BASE_URL+'/api/payment_sessions',
 		  headers: { email: session.email, token: session.token },
 		  data: {
 		  	"payment_session": {
-		  											"amount": amount.toString(), 
+		  											"amount": amount.toString(),
+		  											"amount_surcharge": surchargeAmount.toString(),
+		  											"total_amount": totalAmount.toString(), 
 														"payment_page_url": null, 
 														"created_at": null, 
 														"updated_at": null, 
@@ -112,6 +164,13 @@ export const onSplitPaymentConfirmed = (session, traveller, amount) => {
 			}
 		})
 		.then(response => showCheckoutSuccess(dispatch, response.data["payment_session"]));
+	}
+};
+
+export const showPaymentResult = (result, payment_session_id, session) => {
+	return (dispatch) => {
+		axios.get(BASE_URL+`/api/payment_sessions/${payment_session_id}/update_from_app?result=${result}`, { headers: { email: session.email, token: session.token } })
+			.then(response => fetchPaymentResultSuccess(dispatch, response.data['payment_session']))
 	}
 };
 

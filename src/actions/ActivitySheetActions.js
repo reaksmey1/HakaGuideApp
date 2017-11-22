@@ -20,7 +20,8 @@ import {
 				SHOW_TPI_SUCCESS,
 				SHOW_TPI_FAILED,
 				CUSTOMER_SELECTED,
-				BOOKING_SELECTED
+				BOOKING_SELECTED,
+				GET_BOOKING_SUCCESS
 			} from './types';
 
 const showItinerariesSuccess = (dispatch, days) => {
@@ -110,17 +111,32 @@ const generateAddMultipleCustomerHash = (session, option, day, selectedCustomers
 	return hash;
 };
 
+const getBookingSuccess = (dispatch, response, customer) => {
+	selected_traveller = ""
+	travellers_list = response.links.travellers_list
+
+	for (var i in travellers_list) {
+		if (travellers_list[i]._id == customer) {
+			selected_traveller = travellers_list[i]
+		}
+	}
+
+	dispatch({ type: BOOKING_SELECTED, payload: response});
+	dispatch({ type: CUSTOMER_SELECTED, payload: selected_traveller });
+
+	Actions.customerMain();
+};
+
 export const showTourPartyInfo = () => {
 	return (dispatch) => {
 		Actions.main({type: 'reset'});
 	}
 };
 
-export const onTourGroupCustomerSelected = (booking, customer) => {
+export const onTourGroupCustomerSelected = (session, booking, customer) => {
 	return (dispatch) => {
-		dispatch({ type: BOOKING_SELECTED, payload: booking});
-		dispatch({ type: CUSTOMER_SELECTED, payload: customer });
-		Actions.tourGroupCustomerDetail();
+		axios.get(BASE_URL+`/api/bookings/bookings/${booking}`, { headers: { email: session.email, token: session.token } })
+			.then(response => getBookingSuccess(dispatch, response.data['bookings/booking'], customer))
 	}
 };
 

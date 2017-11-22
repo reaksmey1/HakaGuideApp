@@ -28,7 +28,7 @@ export const onCustomerSelected = (booking, customer) => {
 	return (dispatch) => {
 		dispatch({ type: BOOKING_SELECTED, payload: booking});
 		dispatch({ type: CUSTOMER_SELECTED, payload: customer });
-		Actions.customerDetail();
+		Actions.customerMain();
 	}
 };
 
@@ -49,6 +49,18 @@ export const tourGroupChanged = (text) => {
 export const showActivitySheet = () => {
 	return (dispatch) => {
 		Actions.activityMain({type: 'reset'});
+	}
+};
+
+export const showPaymentHistories = () => {
+	return (dispatch) => {
+		Actions.paymentHistoryMain({type: 'reset'});
+	}
+};
+
+export const showCustomerDetail = () => {
+	return (dispatch) => {
+		Actions.customerMain({type: 'reset'});
 	}
 };
 

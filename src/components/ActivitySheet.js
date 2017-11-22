@@ -21,6 +21,12 @@ import { showTourPartyInfo,
 					onTourGroupItinerarySelected, onBookingPress } from '../actions';
 
 class ActivitySheet extends Component {
+
+	componentWillMount() {
+    const { tourCode, session } = this.props;
+		this.props.showItineraries({ tourCode, session });
+  }
+
 	onTourPartyInfoPress() {
 		this.props.showTourPartyInfo();
 	}
