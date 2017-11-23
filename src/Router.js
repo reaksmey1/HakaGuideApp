@@ -23,6 +23,7 @@ import PayByCash from './components/PayByCash';
 import PaymentHistory from './components/PaymentHistory';
 import FullPayment from './components/FullPayment';
 import PaymentResult from './components/PaymentResult';
+import CardOptions from './components/CardOptions';
 
 const RouterComponent = () => {
 	return (
@@ -94,6 +95,12 @@ const RouterComponent = () => {
 					key="splitPayment"
 					component={SplitPayment}
 					title="Pay Partial Amount"
+				/>
+
+				<Scene
+					key="cardOptions"
+					component={CardOptions}
+					title="Pick a Card"
 				/>
 
 				<Scene

@@ -56,7 +56,7 @@ class SplitPayment extends Component {
 
           </Item>
 
-          <Button primary block style={{ marginTop: 10}} onPress={() => this.props.onSplitPaymentConfirmed(this.props.session, this.props.selectedTraveller, this.props.amount, this.props.surchargeAmount, this.props.totalAmount)}><Text> Pay </Text></Button>
+          <Button primary block style={{ marginTop: 10}} onPress={() => this.props.onSplitPaymentConfirmed()}><Text> Pay </Text></Button>
 
         </Form>
 				</Content>
@@ -71,7 +71,8 @@ const mapStateToProps = state => {
 		surchargeAmount: state.payment.surchargeAmount,
 		totalAmount: state.payment.totalAmount,
 		selectedTraveller: state.activity.selectedTraveller,
-		session: state.auth.session
+		session: state.auth.session,
+		booking: state.tourParty.selectedBooking
 	};
 };
 

@@ -143,7 +143,38 @@ export const onPayByCashConfirmed = (details, amount, session, booking_id, trave
 	}
 };
 
-export const onSplitPaymentConfirmed = (session, traveller, amount, surchargeAmount, totalAmount) => {
+export const onSplitPaymentConfirmed = () => {
+	return (dispatch) => {
+		Actions.cardOptions();
+	}
+};
+
+export const payByExistedCard = (session, traveller, amount, surchargeAmount, totalAmount, card_id) => {
+	return (dispatch) => {
+		dispatch({ type: SHOW_CHECKOUT_PAGE });
+		axios({
+		  method: 'post',
+		  url: BASE_URL+'/api/payment_sessions',
+		  headers: { email: session.email, token: session.token },
+		  data: {
+		  	"payment_session": {
+		  											"amount": amount.toString(),
+		  											"card_id": card_id,
+		  											"amount_surcharge": surchargeAmount.toString(),
+		  											"total_amount": totalAmount.toString(), 
+														"payment_page_url": null, 
+														"created_at": null, 
+														"updated_at": null, 
+														"response_description": null, 
+														"booking_id": traveller.booking_id
+													}
+			}
+		})
+		.then(response => showCheckoutSuccess(dispatch, response.data["payment_session"]));
+	}
+}
+
+export const payByNewCard = (session, traveller, amount, surchargeAmount, totalAmount) => {
 	return (dispatch) => {
 		dispatch({ type: SHOW_CHECKOUT_PAGE });
 		axios({
@@ -165,7 +196,31 @@ export const onSplitPaymentConfirmed = (session, traveller, amount, surchargeAmo
 		})
 		.then(response => showCheckoutSuccess(dispatch, response.data["payment_session"]));
 	}
-};
+}
+
+// export const onSplitPaymentConfirmed = (session, traveller, amount, surchargeAmount, totalAmount) => {
+	// return (dispatch) => {
+	// 	dispatch({ type: SHOW_CHECKOUT_PAGE });
+	// 	axios({
+	// 	  method: 'post',
+	// 	  url: BASE_URL+'/api/payment_sessions',
+	// 	  headers: { email: session.email, token: session.token },
+	// 	  data: {
+	// 	  	"payment_session": {
+	// 	  											"amount": amount.toString(),
+	// 	  											"amount_surcharge": surchargeAmount.toString(),
+	// 	  											"total_amount": totalAmount.toString(), 
+	// 													"payment_page_url": null, 
+	// 													"created_at": null, 
+	// 													"updated_at": null, 
+	// 													"response_description": null, 
+	// 													"booking_id": traveller.booking_id
+	// 												}
+	// 		}
+	// 	})
+	// 	.then(response => showCheckoutSuccess(dispatch, response.data["payment_session"]));
+	// }
+// };
 
 export const showPaymentResult = (result, payment_session_id, session) => {
 	return (dispatch) => {
