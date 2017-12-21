@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, 
 					Header, 
@@ -10,6 +11,7 @@ import { Container,
 					ListItem, 
 					Icon,
 					Spinner, Button, Footer, FooterTab } from 'native-base';
+import { ConfirmDialog } from 'react-native-simple-dialogs';
 import { bookedActivitiesFetch, onActivityRefund, onCheckoutPress, showPaymentHistories } from '../actions';
 
 class CustomerDetail extends Component {
@@ -26,6 +28,18 @@ class CustomerDetail extends Component {
 
 	onShowPaymentHistoriesPress() {
 		this.props.showPaymentHistories();
+	}
+
+	onRefundButtonPress(addon) {
+		Alert.alert(
+		  'Refund Activites',
+		  'Are you sure, you want to refund this activity ?',
+		  [
+		    {text: 'Yes', onPress: () => this.props.onActivityRefund(addon, this.props.session, this.props.customer, this.props.booking)},
+		    {text: 'No'},
+		  ],
+		  { cancelable: false }
+		)
 	}
 
 	renderHeader() {
@@ -52,14 +66,16 @@ class CustomerDetail extends Component {
     }
 		return (
 			this.props.bookedActivities.map(addon => 
-        <ListItem key={addon.id} onPress={() => this.props.onActivityRefund(addon, this.props.session, this.props.customer, this.props.booking)}>
+        <ListItem key={addon.id}>
         	<Body>
           	<Text style={styles.addonHeader}>{addon.name}</Text>
           	<Text style={styles.addonDetails}>{addon.links.option_name}</Text>
           	<Text style={styles.addonDetails}>Price: ${addon.price}</Text>
         	</Body>
         	<Right>
-	          <Icon style={{color: 'red', fontSize: 30}} name="ios-swap-outline" />
+        		<Button danger onPress={() => this.onRefundButtonPress(addon)}>
+              <Icon active name="trash" />
+            </Button>
 	        </Right>
         </ListItem>
       )
@@ -125,6 +141,7 @@ const mapStateToProps = state => {
 		selectedTraveller: state.activity.selectedTraveller,
 		session: state.auth.session,
 		loading: state.activity.loading,
+		dialogVisible: true
 	};
 };
 
