@@ -60,11 +60,61 @@ class CustomerDetail extends Component {
   	);
 	}
 
+	renderAdhocs() {
+		if (this.props.selectedTraveller) {
+			if (this.props.selectedTraveller.links.ad_hocs.length == 0) {
+				return (
+					<ListItem>
+	    			<Text style={{color: 'red'}}> There is no Adhocs </Text>
+	    		</ListItem>
+				)
+			}
+			return (
+				this.props.selectedTraveller.links.ad_hocs.map(ad_hoc => 
+	        <ListItem key={ad_hoc._id}>
+	        	<Body>
+	          	<Text style={styles.addonHeader}>{ad_hoc.reference}</Text>
+	          	<Text style={styles.addonDetails}>Price: ${ad_hoc.price}</Text>
+	        	</Body>
+	        </ListItem>
+	      )
+			);
+		}
+	}
+
+	renderCustomAddons() {
+		if (this.props.customAddons.length == 0) {
+			return (
+				<ListItem>
+    			<Text style={{color: 'red'}}> There is no Custom Addons </Text>
+    		</ListItem>
+			)
+		}
+		return (  
+			this.props.customAddons.map(addon => 
+        <ListItem key={addon.id}>
+        	<Body>
+          	<Text style={styles.addonHeader}>{addon.name}</Text>
+          	<Text style={styles.addonDetails}>{addon.location}</Text>
+          	<Text style={styles.addonDetails}>Price: ${addon.price}</Text>
+        	</Body>
+        </ListItem>
+      )
+		);
+	}
+
 	renderContent() {
 		if (this.props.loading) {
       return <Spinner size='large' />;
     }
-		return (
+    if (this.props.bookedActivities.length == 0) {
+			return (
+				<ListItem>
+    			<Text style={{color: 'red'}}> There is no booked activities </Text>
+    		</ListItem>
+			)
+		}
+		return (  
 			this.props.bookedActivities.map(addon => 
         <ListItem key={addon.id}>
         	<Body>
@@ -82,6 +132,27 @@ class CustomerDetail extends Component {
 		);
 	}
 
+	renderRefundedActivities() {
+		if (this.props.refundedActivities.length == 0) {
+			return (
+				<ListItem>
+    			<Text style={{color: 'red'}}> There is no refunded activities </Text>
+    		</ListItem>
+			)
+		}
+		return (  
+			this.props.refundedActivities.map(addon => 
+        <ListItem key={addon.id}>
+        	<Body>
+          	<Text style={styles.addonHeader}>{addon.name}</Text>
+          	<Text style={styles.addonDetails}>{addon.links.option_name}</Text>
+          	<Text style={styles.addonDetails}>Price: ${addon.price}</Text>
+        	</Body>
+        </ListItem>
+      )
+		);
+	}
+
 	render() {
 		return(
 			<Container>
@@ -89,7 +160,22 @@ class CustomerDetail extends Component {
 					{this.renderHeader()}
 				</Header>
 				<Content>
+					<ListItem itemDivider>
+		        <Text>Pre-booked Activities</Text>
+		      </ListItem> 
 					{this.renderContent()}
+					<ListItem itemDivider>
+		        <Text>Custom Addons</Text>
+		      </ListItem>
+		      {this.renderCustomAddons()}
+					<ListItem itemDivider>
+		        <Text>Ad-hocs</Text>
+		      </ListItem>
+					{this.renderAdhocs()}
+					<ListItem itemDivider>
+		        <Text>Refunded Activities</Text>
+		      </ListItem>
+					{this.renderRefundedActivities()}
 				</Content>
 				<Footer>
           <FooterTab>
@@ -138,6 +224,8 @@ const mapStateToProps = state => {
 		customer: state.tourParty.selectedCustomer,
 		booking: state.tourParty.selectedBooking,
 		bookedActivities: state.activity.bookedActivities,
+		customAddons: state.activity.customAddons,
+		refundedActivities: state.activity.refundedActivities,
 		selectedTraveller: state.activity.selectedTraveller,
 		session: state.auth.session,
 		loading: state.activity.loading,

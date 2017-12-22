@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, 
 					Header, 
@@ -10,12 +11,25 @@ import { Container,
 					Content, 
 					List, 
 					ListItem,
-					Icon
+					Icon,
+					Button
 				} from 'native-base';
 import { onOptionSelected } from '../actions';
 
 
 class Options extends Component {
+
+	onOptionButtonPress(option) {
+		Alert.alert(
+		  option.name,
+		  'Are you sure, you want to book this activity ?',
+		  [
+		    {text: 'Yes', onPress: () => this.props.onOptionSelected(option, this.props.day, this.props.session, this.props.customer, this.props.booking_id)},
+		    {text: 'No'},
+		  ],
+		  { cancelable: false }
+		)
+	}
 
 	renderOptions() {
 		if (this.props.loading) {
@@ -30,13 +44,15 @@ class Options extends Component {
     }
 		return (
 			this.props.options.map(option => 
-        <ListItem key={option.id} onPress={() => this.props.onOptionSelected(option, this.props.day, this.props.session, this.props.customer, this.props.booking_id)}>
+        <ListItem key={option.id}>
         	<Body>
           	<Text style={styles.optionHeader}>{ option.name } </Text>
           	<Text style={styles.optionDetails}>Price: ${ option.price }</Text>
         	</Body>
         	<Right>
-	          <Icon style={{color: 'blue', fontSize: 30}} name="ios-cart" />
+        		<Button primary onPress={() => this.onOptionButtonPress(option)}>
+              <Icon active name="ios-cart" />
+            </Button>
 	        </Right>
         </ListItem>
       )
