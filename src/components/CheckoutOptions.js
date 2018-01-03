@@ -22,7 +22,6 @@ class CheckoutOptions extends Component {
 					<Body>
 						<Button primary style={styles.checkoutBtn} onPress={() => this.props.onSplitPaymentPress()}><Text> PAY BY CREDIT CARD </Text></Button>
 						<Button warning style={styles.checkoutBtn} onPress={() => this.props.onPayByCashPress()}><Text> PAY BY CASH </Text></Button>
-						<Button primary style={styles.checkoutBtn} onPress={() => this.props.onPayFullAmountPress(this.props.session, this.props.selectedTraveller)}><Text> PAY FULL AMOUNT { this.props.selectedTraveller.links.balance_remaining } NZD </Text></Button>
 					</Body>
 				</Content>
 			</Container>
