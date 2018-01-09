@@ -26,6 +26,9 @@ class SplitPayment extends Component {
 				<Header>
 					<View>
 						<Text> Please Enter Amount You Want To Pay </Text>
+						<Text style={{color: 'red', alignSelf: 'center'}}> 
+		      		( ${ this.props.selectedTraveller.links.balance_remaining.toFixed(2) } Left ) 
+	      		</Text> 
 					</View>
 				</Header>
 				<Content>
