@@ -60,6 +60,54 @@ class CustomerDetail extends Component {
   	);
 	}
 
+	renderPostAccommodations() {
+		if (this.props.selectedTraveller) {
+			if (this.props.selectedTraveller.links.post_accommodations.length == 0) {
+				return (
+					<ListItem>
+						<Text style={{color: 'red'}}> There is no Post Accommodation </Text>
+					</ListItem>
+				)
+			}
+			return (
+				this.props.selectedTraveller.links.post_accommodations.map(post_accomm => 
+					<ListItem key={post_accomm.id}>
+						<Body>
+							<Text style={styles.addonHeader}>{post_accomm.nights} nights after tour at {post_accomm.location}</Text>
+	          	<Text style={styles.addonDetails}>{post_accomm.option}: ${post_accomm.price}</Text>
+	          	<Text style={styles.addonDetails}>Start Date: {post_accomm.startDate}</Text>
+	          	<Text style={styles.addonDetails}>End Date: {post_accomm.endDate}</Text>
+						</Body>
+					</ListItem>
+				)
+			);
+		}
+	}
+
+	renderPreAccommodations() {
+		if (this.props.selectedTraveller) {
+			if (this.props.selectedTraveller.links.pre_accommodations.length == 0) {
+				return (
+					<ListItem>
+						<Text style={{color: 'red'}}> There is no Pre Accommodation </Text>
+					</ListItem>
+				)
+			}
+			return (
+				this.props.selectedTraveller.links.pre_accommodations.map(pre_accomm => 
+					<ListItem key={pre_accomm.id}>
+						<Body>
+							<Text style={styles.addonHeader}>{pre_accomm.nights} nights before tour at {pre_accomm.location}</Text>
+	          	<Text style={styles.addonDetails}>{pre_accomm.option}: ${pre_accomm.price}</Text>
+	          	<Text style={styles.addonDetails}>Start Date: {pre_accomm.startDate}</Text>
+	          	<Text style={styles.addonDetails}>End Date: {pre_accomm.endDate}</Text>
+						</Body>
+					</ListItem>
+				)
+			);
+		}
+	}
+
 	renderAdhocs() {
 		if (this.props.selectedTraveller) {
 			if (this.props.selectedTraveller.links.ad_hocs.length == 0) {
@@ -173,6 +221,14 @@ class CustomerDetail extends Component {
 		      </ListItem>
 					{this.renderAdhocs()}
 					<ListItem itemDivider>
+		        <Text>Pre Accommodations</Text>
+		      </ListItem>
+					{this.renderPreAccommodations()}
+					<ListItem itemDivider>
+		        <Text>Post Accommodations</Text>
+		      </ListItem>
+					{this.renderPostAccommodations()}
+					<ListItem itemDivider>
 		        <Text>Refunded Activities</Text>
 		      </ListItem>
 					{this.renderRefundedActivities()}
@@ -220,6 +276,7 @@ const styles = {
 };
 
 const mapStateToProps = state => {
+	console.log(state.activity.selectedTraveller);
 	return {
 		customer: state.tourParty.selectedCustomer,
 		booking: state.tourParty.selectedBooking,
