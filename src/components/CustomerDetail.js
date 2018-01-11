@@ -108,6 +108,28 @@ class CustomerDetail extends Component {
 		}
 	}
 
+	renderUpgradeAccommodations() {
+		if (this.props.selectedTraveller) {
+			if (this.props.selectedTraveller.links.upgrade_accommodations.length == 0) {
+				return (
+					<ListItem>
+						<Text style={{color: 'red'}}> There is no Accommodation Upgrade </Text>
+					</ListItem>
+				)
+			}
+			return (
+				this.props.selectedTraveller.links.upgrade_accommodations.map(upgrade_accomm =>
+					<ListItem key={upgrade_accomm.id}>
+						<Body>
+							<Text style={styles.addonHeader}>{upgrade_accomm.name}</Text>
+	          	<Text style={styles.addonDetails}>{upgrade_accomm.option}: ${upgrade_accomm.price}</Text>
+						</Body>
+					</ListItem>
+				)
+			);
+		}
+	}
+
 	renderAdhocs() {
 		if (this.props.selectedTraveller) {
 			if (this.props.selectedTraveller.links.ad_hocs.length == 0) {
@@ -229,6 +251,10 @@ class CustomerDetail extends Component {
 		      </ListItem>
 					{this.renderPostAccommodations()}
 					<ListItem itemDivider>
+		        <Text>Upgrade Accommodations</Text>
+		      </ListItem>
+					{this.renderUpgradeAccommodations()}
+					<ListItem itemDivider>
 		        <Text>Refunded Activities</Text>
 		      </ListItem>
 					{this.renderRefundedActivities()}
@@ -276,7 +302,6 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-	console.log(state.activity.selectedTraveller);
 	return {
 		customer: state.tourParty.selectedCustomer,
 		booking: state.tourParty.selectedBooking,
