@@ -57,78 +57,57 @@ class CustomerTourPartyInfo extends Component {
 			return (
 				<Card>
 				<Card>
-          <CardItem header>                        
-              <Text>Guide Flight</Text>
-          </CardItem>
-
           <CardItem>                        
               <MarkdownView>
+                  **Guide Flight**{'\n'}
                   {this.props.tpi.guide_flight}
               </MarkdownView>
           </CardItem>
      		</Card>
      		<Card>
-          <CardItem header>                        
-              <Text>Bus Info</Text>
-          </CardItem>
-
           <CardItem>                        
               <MarkdownView>
-                  {this.props.tpi.bus_info}
+                **Bus Info**{'\n'}
+                {this.props.tpi.bus_info}
               </MarkdownView>
           </CardItem>
      		</Card>
      		<Card>
-          <CardItem header>                        
-              <Text>Maori Hangi</Text>
-          </CardItem>
-
           <CardItem>                        
               <MarkdownView>
+                  **Maori Hangi**{'\n'}
                   {this.props.tpi.maori_hangi}
               </MarkdownView>
           </CardItem>
      		</Card>
      		<Card>
-          <CardItem header>                        
-              <Text>Bone Carving</Text>
-          </CardItem>
-
           <CardItem>                        
               <MarkdownView>
+                  **Bone Carving**{'\n'}
                   {this.props.tpi.bone_carving}
               </MarkdownView>
           </CardItem>
      		</Card>
      		<Card>
-          <CardItem header>                        
-              <Text>Ferry</Text>
-          </CardItem>
-
           <CardItem>                        
               <MarkdownView>
-                  {this.props.tpi.ferri}
+                  **Ferry**{'\n'}
+                  {this.props.tpi.ferry}
               </MarkdownView>
           </CardItem>
      		</Card>
      		<Card>
-          <CardItem header>                        
-              <Text>Train</Text>
-          </CardItem>
-
           <CardItem>                        
               <MarkdownView>
+                  **Train**{'\n'}
                   {this.props.tpi.train}
               </MarkdownView>
           </CardItem>
      		</Card>
      		<Card>
-          <CardItem header>                        
-              <Text>Other</Text>
-          </CardItem>
-
           <CardItem>                        
               <MarkdownView>
+                  **Other**{'\n'}
                   {this.props.tpi.other}
              	</MarkdownView>
           </CardItem>
