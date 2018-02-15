@@ -1,10 +1,12 @@
 import { Actions } from 'react-native-router-flux';
+import { AsyncStorage } from 'react-native';
 import axios from 'axios';
 import { EMAIL_CHANGED, 
 				 PASSWORD_CHANGED,
 				 LOGIN_USER,
 				 LOGIN_USER_SUCCESS,
-				 LOGIN_USER_FAIL 
+				 LOGIN_USER_FAIL,
+				 STORE_TO_SESSION 
 				} from './types';
 import { BASE_URL } from './config';
 
@@ -23,6 +25,10 @@ export const passwordChanged = (text) => {
 };
 
 const loginUserSuccess = (dispatch, session) => {
+	AsyncStorage.multiSet([
+				['token', session.token],
+				['email', session.email]
+			]);
 	dispatch({
 		type: LOGIN_USER_SUCCESS,
 		payload: session
@@ -35,6 +41,18 @@ const loginUserFail = (dispatch, text) => {
 		type: LOGIN_USER_FAIL,
 		payload: text
 	});
+};
+
+export const showTourParty = () => {
+	return (dispatch) => {
+		Actions.main({type: 'reset'});
+	}
+};
+
+export const showLogin = () => {
+	return (dispatch) => {
+		Actions.auth({type: 'reset'});
+	}
 };
 
 export const loginUser = ({ email, password }) => {

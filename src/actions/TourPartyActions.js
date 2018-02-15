@@ -7,7 +7,8 @@ import {
 				SHOW_CUSTOMERS_SUCCESS,
 				SHOW_CUSTOMERS_FAIL,
 				CUSTOMER_SELECTED,
-				BOOKING_SELECTED
+				BOOKING_SELECTED,
+				STORE_TO_SESSION
 			} from './types';
 
 const showCustomersSuccess = (dispatch, bookings) => {
@@ -29,6 +30,15 @@ export const onCustomerSelected = (booking, customer) => {
 		dispatch({ type: BOOKING_SELECTED, payload: booking});
 		dispatch({ type: CUSTOMER_SELECTED, payload: customer });
 		Actions.customerMain();
+	}
+};
+
+export const storeToSession = ({token, email}) => {
+	return (dispatch) => {
+		dispatch({ 
+			type: STORE_TO_SESSION, 
+			payload: {token, email}
+		});
 	}
 };
 

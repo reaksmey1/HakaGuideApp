@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from 'react-native';
 import { Image } from 'react-native';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
+import { emailChanged, passwordChanged, loginUser, storeToSession } from '../actions';
 import { Content, 
           Button, 
           Text, 
@@ -14,6 +15,10 @@ import { Content,
           Spinner
         } from 'native-base';
 class LoginForm extends Component {
+
+  componentWillMount() {
+    AsyncStorage.multiRemove(['token', 'email']);
+  }
 
   onEmailChange(text) {
     this.props.emailChanged(text);
@@ -113,4 +118,4 @@ const styles = {
 };
 
 
-export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser })(LoginForm);
+export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser, storeToSession })(LoginForm);

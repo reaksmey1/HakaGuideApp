@@ -53,7 +53,7 @@ class PaymentHistory extends Component {
 				this.props.paymentHistories.slice(0).reverse().map(payment => 
 					<ListItem key={payment._id}>
 	          <Body>
-	            <Text>{Moment(payment.created_at).format('d MMM YY')}</Text>
+	            <Text>{Moment(payment.created_at).format('D MMM YY')}</Text>
 	            <Text note>{payment.details}</Text>
 	          </Body>
 	          <Right>

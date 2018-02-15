@@ -28,6 +28,18 @@ import CardOptions from './components/CardOptions';
 const RouterComponent = () => {
 	return (
 		<Router sceneStyle={{ paddingTop: 65 }}>
+
+			<Scene key="main">
+				<Scene 
+					key="tourParty"
+					component={TourParty}
+					title="Customers"
+					onRight={() => Actions.auth({type: 'reset'})}
+					rightTitle="Sign Out"
+					initial
+				/>
+			</Scene>
+
 			<Scene key="auth">
 				<Scene key="login" component={LoginForm} hideNavBar />
 			</Scene>
@@ -119,15 +131,6 @@ const RouterComponent = () => {
 					key="refundRecipes"
 					component={RefundRecipes}
 					title="Recipes"
-				/>
-			</Scene>
-
-			<Scene key="main">
-				<Scene 
-					key="tourParty"
-					component={TourParty}
-					title="Customers"
-					initial
 				/>
 			</Scene>
 

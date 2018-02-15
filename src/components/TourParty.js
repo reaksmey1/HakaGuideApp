@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { Container, 
@@ -16,10 +17,20 @@ import { Container,
 					List, 
 					ListItem,
 					Right } from 'native-base';
-import { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet, onBookingPress} from '../actions';
+import { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet, onBookingPress, storeToSession, showLogin} from '../actions';
 
 class TourParty extends Component {
 	componentWillMount() {
+		AsyncStorage.multiGet(['token', 'email']).then((data) => {
+      token = data[0][1];
+      email = data[1][1];
+      if (token) {
+        this.props.storeToSession({token, email});
+      } else {
+      	this.props.showLogin();
+      }
+    });
+
     const { tourCode, session } = this.props;
     if (tourCode) {
 			this.props.showCustomers({ tourCode, session });
@@ -178,4 +189,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet, onBookingPress })(TourParty);
+export default connect(mapStateToProps, { tourGroupChanged, showCustomers, onCustomerSelected, showActivitySheet, onBookingPress, storeToSession, showLogin })(TourParty);
