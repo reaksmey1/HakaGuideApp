@@ -7,7 +7,7 @@ import { Container,
           Text,  
           Body, 
           Content, 
-          Button, Form, Label, Input } from 'native-base';
+          Button, Form, Label, Input, Spinner } from 'native-base';
 import { onAdHocAmountChange, onAdHocNameChange, onAddAdhocSelected } from '../actions';
 
 class AdHoc extends Component {
@@ -18,6 +18,18 @@ class AdHoc extends Component {
 
   onAdHocNameChange(text) {
     this.props.onAdHocNameChange(text);
+  }
+
+  renderButton() {
+    if (this.props.loading) {
+      return <Spinner size='large' />;
+    }
+
+    return (
+      <Button primary onPress={() => this.props.onAddAdhocSelected(this.props.name, this.props.amount, this.props.session, this.props.booking_id, this.props.selectedTraveller)}>
+        <Text> Add </Text>
+      </Button>
+    );
   }
 
   render() {
@@ -41,7 +53,7 @@ class AdHoc extends Component {
             />
           </Item>
 
-          <Button primary onPress={() => this.props.onAddAdhocSelected(this.props.name, this.props.amount, this.props.session, this.props.booking_id)}><Text> Add </Text></Button>
+          {this.renderButton()}
 
         </Form>
         </Content>
@@ -56,6 +68,8 @@ const mapStateToProps = state => {
     name: state.adhoc.name,
     session: state.auth.session,
     booking_id: state.tourParty.selectedBooking.id,
+    selectedTraveller: state.activity.selectedTraveller,
+    loading: state.adhoc.loading
   };
 };
 

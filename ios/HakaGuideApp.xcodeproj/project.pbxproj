@@ -46,6 +46,7 @@
 		8CC090AED6F549D989F8C172 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A42F72481EBA436D86FC9C34 /* Roboto_medium.ttf */; };
 		9534ED68F81E41D29EC57FD9 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 602491E44379423C967E923D /* Foundation.ttf */; };
 		9992B40BABD7495DB3432884 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04289A698B9A48EC80E841EB /* rubicon-icon-font.ttf */; };
+		9E73D0A22036701800D32B02 /* version_22_profile.mobileprovision in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E73D0A12036701800D32B02 /* version_22_profile.mobileprovision */; };
 		C0683E6A555F4380B241145E /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC8EB19711194B39A87E2D73 /* Ionicons.ttf */; };
 		FD14CE4F3392404EBC1F1F07 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA3A8F68B38C413EA7C48619 /* MaterialIcons.ttf */; };
 		FECBC28A45164846AD4EBBB6 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC529632DC6C419AAADE1D61 /* EvilIcons.ttf */; };
@@ -310,6 +311,7 @@
 		7F6942C081144283BD53DECE /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		999848F188DB4331BF5E5EB3 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/@expo/vector-icons/vendor/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		9E73D0A12036701800D32B02 /* version_22_profile.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; name = version_22_profile.mobileprovision; path = ../../../../Downloads/version_22_profile.mobileprovision; sourceTree = "<group>"; };
 		A42F72481EBA436D86FC9C34 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		AA3A8F68B38C413EA7C48619 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		AC529632DC6C419AAADE1D61 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E73D0A22036701800D32B02 /* version_22_profile.mobileprovision in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -537,6 +540,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				F3AC9851C0A645DB89BD01AE /* Resources */,
 				9E365D7E1FFEEF4C0036BFC4 /* Recovered References */,
+				9E73D0822036701800D32B02 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -559,6 +563,14 @@
 				7F6942C081144283BD53DECE /* libRNVectorIcons.a */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		9E73D0822036701800D32B02 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9E73D0A12036701800D32B02 /* version_22_profile.mobileprovision */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9F66E2C51F70DA59006867E8 /* Products */ = {
@@ -678,7 +690,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1181,7 +1193,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 54EV62NM6P;
@@ -1197,9 +1210,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.HakaGuideApp1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hakatours.HakaGuideApp;
 				PRODUCT_NAME = HakaGuideApp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "fb1a29ee-866f-4e58-b448-628b39843725";
+				PROVISIONING_PROFILE_SPECIFIER = "7 devices";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1208,7 +1222,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 54EV62NM6P;
 				HEADER_SEARCH_PATHS = (
@@ -1223,9 +1238,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.HakaGuideApp1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hakatours.HakaGuideApp;
 				PRODUCT_NAME = HakaGuideApp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "fb1a29ee-866f-4e58-b448-628b39843725";
+				PROVISIONING_PROFILE_SPECIFIER = "7 devices";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

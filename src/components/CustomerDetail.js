@@ -12,7 +12,7 @@ import { Container,
 					Icon,
 					Spinner, Button, Footer, FooterTab } from 'native-base';
 import { ConfirmDialog } from 'react-native-simple-dialogs';
-import { bookedActivitiesFetch, onActivityRefund, onCheckoutPress, showPaymentHistories } from '../actions';
+import { bookedActivitiesFetch, onActivityRefund, onCheckoutPress, showPaymentHistories, onDeleteAdhoc } from '../actions';
 
 class CustomerDetail extends Component {
 
@@ -28,6 +28,18 @@ class CustomerDetail extends Component {
 
 	onShowPaymentHistoriesPress() {
 		this.props.showPaymentHistories();
+	}
+
+	onDeleteAdhocButtonPress(ad_hoc) {
+		Alert.alert(
+		  'Delete Adhoc',
+		  'Are you sure, you want to remove this adhoc ?',
+		  [
+		    {text: 'Yes', onPress: () => this.props.onDeleteAdhoc(ad_hoc, this.props.session, this.props.customer, this.props.booking)},
+		    {text: 'No'},
+		  ],
+		  { cancelable: false }
+		)
 	}
 
 	onRefundButtonPress(addon) {
@@ -141,11 +153,16 @@ class CustomerDetail extends Component {
 			}
 			return (
 				this.props.selectedTraveller.links.ad_hocs.map(ad_hoc => 
-	        <ListItem key={ad_hoc._id}>
+	        <ListItem key={ad_hoc.id}>
 	        	<Body>
 	          	<Text style={styles.addonHeader}>{ad_hoc.reference}</Text>
 	          	<Text style={styles.addonDetails}>Price: ${ad_hoc.price}</Text>
 	        	</Body>
+	        	<Right>
+	        		<Button danger onPress={() => this.onDeleteAdhocButtonPress(ad_hoc)}>
+	              <Icon active name="trash" />
+	            </Button>
+		        </Right>
 	        </ListItem>
 	      )
 			);
@@ -315,5 +332,5 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { bookedActivitiesFetch, onActivityRefund, onCheckoutPress, showPaymentHistories })(CustomerDetail);
+export default connect(mapStateToProps, { bookedActivitiesFetch, onActivityRefund, onCheckoutPress, showPaymentHistories, onDeleteAdhoc })(CustomerDetail);
 

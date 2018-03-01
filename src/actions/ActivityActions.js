@@ -46,7 +46,7 @@ const addActivitySuccess = (dispatch, activities) => {
 		payload: activities
 	});
 
-	Actions.customerDetail();
+	Actions.customerDetail({type: 'reset'});
 };
 
 const addActivityFail = (dispatch) => {
@@ -60,6 +60,7 @@ const showBookedActivitiesSuccess = (dispatch, response) => {
 		type: SHOW_BOOKED_ACTIVITIES_SUCCESS,
 		payload: response
 	});
+	Actions.customerDetail({type: 'reset'});
 };
 
 const showBookedActivitiesFail = (dispatch) => {
@@ -69,11 +70,11 @@ const showBookedActivitiesFail = (dispatch) => {
 };
 
 const addOptionSuccess = (dispatch) => {
-	Actions.customerDetail();
+	Actions.customerDetail({type: 'reset'});
 };
 
 const activityRefundSuccess = (dispatch) => {
-	Actions.customerDetail();
+	Actions.customerDetail({type: 'reset'});
 };
 
 export const bookedActivitiesFetch = (booking, customer, session) => {
@@ -112,6 +113,17 @@ export const onActivitySelected = (activity, booking_id, session) => {
 		dispatch({ type: ACTIVITY_SELECTED, payload: activity });
 		axios.get(BASE_URL+activity.links.options+`&booking=${booking_id}`, { headers: { email: session.email, token: session.token } })
 			.then(response => fetchOptionsSuccess(dispatch, activity, response.data["addons/options"]))
+	}
+};
+
+export const onDeleteAdhoc = (ad_hoc, session, customer, booking) => {
+	return (dispatch) => {
+		dispatch({ type:  SHOW_BOOKED_ACTIVITIES});
+		axios.get(BASE_URL+`/api/bookings/bookings/${booking.id}/deleteAdhoc?traveller=${customer._id}&ad_hoc=${ad_hoc.id}`, { headers: { email: session.email, token: session.token } })
+			.then(
+				axios.get(BASE_URL+`/api/bookings/bookings/${booking.id}/getActivitiesByTraveller?traveller_id=${customer._id}`, { headers: { email: session.email, token: session.token } })
+					.then(response => showBookedActivitiesSuccess(dispatch, response.data))
+				)
 	}
 };
 

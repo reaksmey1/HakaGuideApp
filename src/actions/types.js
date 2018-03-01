@@ -55,3 +55,5 @@ export const FETCHING_PAYMENT_HISTORIES = "fetchingPaymentHistories";
 export const FETCH_PAYMENT_HISTORIES_SUCCESS = "fetchPaymentHistoriesSuccess";
 export const GET_BOOKING_SUCCESS = "getBookingSuccess";
 export const STORE_TO_SESSION = "storeToSession";
+export const ADDING_ADHOC = "addingAdhoc";
+export const ADDING_ADHOC_SUCCESS = "addingAdhocSuccess";
