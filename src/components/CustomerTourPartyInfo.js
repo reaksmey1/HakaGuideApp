@@ -104,6 +104,38 @@ class CustomerTourPartyInfo extends Component {
               </MarkdownView>
           </CardItem>
      		</Card>
+        <Card>
+          <CardItem>                        
+              <MarkdownView>
+                  **Accommodation Note**{'\n'}
+                  {this.props.tpi.accommodation_note}
+              </MarkdownView>
+          </CardItem>
+        </Card>
+        <Card>
+          <CardItem>                        
+              <MarkdownView>
+                  **Medical Note**{'\n'}
+                  {this.props.tpi.medical_note}
+              </MarkdownView>
+          </CardItem>
+        </Card>
+        <Card>
+          <CardItem>                        
+              <MarkdownView>
+                  **TourTab Payment/Refunds**{'\n'}
+                  {this.props.tpi.tour_tab_payment}
+              </MarkdownView>
+          </CardItem>
+        </Card>
+        <Card>
+          <CardItem>                        
+              <MarkdownView>
+                  **Agent Booking Info**{'\n'}
+                  {this.props.tpi.agent_booking_info}
+              </MarkdownView>
+          </CardItem>
+        </Card>
      		<Card>
           <CardItem>                        
               <MarkdownView>
