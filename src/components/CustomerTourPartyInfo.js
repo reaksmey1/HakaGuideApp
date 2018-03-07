@@ -44,6 +44,14 @@ class CustomerTourPartyInfo extends Component {
 		this.props.showActivitySheet();
 	}
 
+  renderAllergies() {
+    return (
+      this.props.tpi.links.allergies.map(allergy => 
+        <li>{allergy}</li>
+      )
+    );
+  }
+
 	renderTPI() {
 		if (this.props.loading) {
 			return <Spinner size='large' />;
@@ -104,6 +112,22 @@ class CustomerTourPartyInfo extends Component {
               </MarkdownView>
           </CardItem>
      		</Card>
+        <Card>
+          <CardItem>                        
+              <MarkdownView>
+                  **Allergies**{'\n'}
+                    {this.props.tpi.links.allergies}
+              </MarkdownView>
+          </CardItem>
+        </Card>
+        <Card>
+          <CardItem>                        
+              <MarkdownView>
+                  **Special Requests**{'\n'}
+                  {this.props.tpi.links.special_requests}
+              </MarkdownView>
+          </CardItem>
+        </Card>
         <Card>
           <CardItem>                        
               <MarkdownView>
@@ -215,6 +239,7 @@ const styles = {
 };
 
 const mapStateToProps = state => {
+  console.log(state.activitySheet.tpi);
 	return {
 		tourCode: state.tourParty.tourCode,
 		session: state.auth.session,
