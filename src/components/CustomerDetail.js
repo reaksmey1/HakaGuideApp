@@ -77,7 +77,7 @@ class CustomerDetail extends Component {
 			if (this.props.selectedTraveller.links.post_accommodations.length == 0) {
 				return (
 					<ListItem>
-						<Text style={{color: 'red'}}> There is no Post Accommodation </Text>
+						<Text style={{color: '#9C640C'}}> There is no Post Accommodation </Text>
 					</ListItem>
 				)
 			}
@@ -101,7 +101,7 @@ class CustomerDetail extends Component {
 			if (this.props.selectedTraveller.links.pre_accommodations.length == 0) {
 				return (
 					<ListItem>
-						<Text style={{color: 'red'}}> There is no Pre Accommodation </Text>
+						<Text style={{color: '#9C640C'}}> There is no Pre Accommodation </Text>
 					</ListItem>
 				)
 			}
@@ -125,7 +125,7 @@ class CustomerDetail extends Component {
 			if (this.props.selectedTraveller.links.upgrade_accommodations.length == 0) {
 				return (
 					<ListItem>
-						<Text style={{color: 'red'}}> There is no Accommodation Upgrade </Text>
+						<Text style={{color: '#9C640C'}}> There is no Accommodation Upgrade </Text>
 					</ListItem>
 				)
 			}
@@ -147,7 +147,7 @@ class CustomerDetail extends Component {
 			if (this.props.selectedTraveller.links.ad_hocs.length == 0) {
 				return (
 					<ListItem>
-	    			<Text style={{color: 'red'}}> There is no Adhocs </Text>
+	    			<Text style={{color: '#9C640C'}}> There is no Adhocs </Text>
 	    		</ListItem>
 				)
 			}
@@ -155,7 +155,7 @@ class CustomerDetail extends Component {
 				this.props.selectedTraveller.links.ad_hocs.map(ad_hoc => 
 	        <ListItem key={ad_hoc.id}>
 	        	<Body>
-	          	<Text style={styles.addonHeader}>{ad_hoc.reference}</Text>
+	          	<Text style={ad_hoc.price > 0 ? styles.addonHeader : styles.addonHeaderNegative}>{ad_hoc.reference}</Text>
 	          	<Text style={styles.addonDetails}>Price: ${ad_hoc.price}</Text>
 	        	</Body>
 	        	<Right>
@@ -173,7 +173,7 @@ class CustomerDetail extends Component {
 		if (this.props.customAddons.length == 0) {
 			return (
 				<ListItem>
-    			<Text style={{color: 'red'}}> There is no Custom Addons </Text>
+    			<Text style={{color: '#9C640C'}}> There is no Custom Addons </Text>
     		</ListItem>
 			)
 		}
@@ -197,7 +197,7 @@ class CustomerDetail extends Component {
     if (this.props.bookedActivities.length == 0) {
 			return (
 				<ListItem>
-    			<Text style={{color: 'red'}}> There is no booked activities </Text>
+    			<Text style={{color: '#9C640C'}}> There is no booked activities </Text>
     		</ListItem>
 			)
 		}
@@ -211,7 +211,7 @@ class CustomerDetail extends Component {
         	</Body>
         	<Right>
         		<Button danger onPress={() => this.onRefundButtonPress(addon)}>
-              <Icon active name="trash" />
+              <Icon active name="md-repeat" />
             </Button>
 	        </Right>
         </ListItem>
@@ -223,7 +223,7 @@ class CustomerDetail extends Component {
 		if (this.props.refundedActivities.length == 0) {
 			return (
 				<ListItem>
-    			<Text style={{color: 'red'}}> There is no refunded activities </Text>
+    			<Text style={{color: '#9C640C'}}> There is no refunded activities </Text>
     		</ListItem>
 			)
 		}
@@ -305,6 +305,11 @@ const styles = {
 
 	addonHeader: {
 		color: 'green',
+		marginBottom: 5
+	},
+
+	addonHeaderNegative: {
+		color: 'red',
 		marginBottom: 5
 	},
 
