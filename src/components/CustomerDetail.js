@@ -190,6 +190,32 @@ class CustomerDetail extends Component {
 		);
 	}
 
+	renderOnRoadActivities() {
+    if (this.props.onRoadActivities.length == 0) {
+			return (
+				<ListItem>
+    			<Text style={{color: '#9C640C'}}> There is no activities booked on road </Text>
+    		</ListItem>
+			)
+		}
+		return (  
+			this.props.onRoadActivities.map(addon => 
+        <ListItem key={addon.id}>
+        	<Body>
+          	<Text style={styles.addonHeader}>{addon.name}</Text>
+          	<Text style={styles.addonDetails}>{addon.links.option_name}</Text>
+          	<Text style={styles.addonDetails}>Price: ${addon.price}</Text>
+        	</Body>
+        	<Right>
+        		<Button danger onPress={() => this.onRefundButtonPress(addon)}>
+              <Icon active name="md-repeat" />
+            </Button>
+	        </Right>
+        </ListItem>
+      )
+		);
+	}
+
 	renderContent() {
 		if (this.props.loading) {
       return <Spinner size='large' />;
@@ -251,6 +277,10 @@ class CustomerDetail extends Component {
 		        <Text>Pre-booked Activities</Text>
 		      </ListItem> 
 					{this.renderContent()}
+					<ListItem itemDivider>
+						<Text>On Road Activities</Text>
+					</ListItem>
+					{this.renderOnRoadActivities()}
 					<ListItem itemDivider>
 		        <Text>Custom Addons</Text>
 		      </ListItem>
@@ -331,6 +361,7 @@ const mapStateToProps = state => {
 		customAddons: state.activity.customAddons,
 		refundedActivities: state.activity.refundedActivities,
 		selectedTraveller: state.activity.selectedTraveller,
+		onRoadActivities: state.activity.onRoadActivities,
 		session: state.auth.session,
 		loading: state.activity.loading,
 		dialogVisible: true
