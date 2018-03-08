@@ -7,13 +7,26 @@ import { Container,
 					Text,  
 					Body, 
 					Content, 
-					Button, Form, Label, Input } from 'native-base';
+					Button, Form, Label, Input, Spinner } from 'native-base';
 import { onCashAmountChange, onPayByCashConfirmed } from '../actions';
 
 class PayByCash extends Component {
 
 	onCashAmountChange(text) {
     this.props.onCashAmountChange(text);
+  }
+
+  renderButton() {
+    if (this.props.loading) {
+      return <Spinner size='large' />;
+    }
+
+    return (
+    	<Button primary onPress={() => this.props.onPayByCashConfirmed('Cash Payment', this.props.cashAmount, this.props.session, this.props.booking_id, this.props.selectedTraveller)}>
+    		<Text> Pay </Text>
+  		</Button>
+
+    );
   }
 
 	render() {
@@ -34,7 +47,7 @@ class PayByCash extends Component {
             />
           </Item>
 
-          <Button primary onPress={() => this.props.onPayByCashConfirmed('Cash Payment', this.props.cashAmount, this.props.session, this.props.booking_id, this.props.selectedTraveller)}><Text> Pay </Text></Button>
+          {this.renderButton()}
 
         </Form>
 				</Content>
@@ -45,6 +58,7 @@ class PayByCash extends Component {
 
 const mapStateToProps = state => {
 	return {
+		loading: state.payment.loading,
 		cashAmount: state.payment.cashAmount,
 		selectedTraveller: state.activity.selectedTraveller,
 		session: state.auth.session,

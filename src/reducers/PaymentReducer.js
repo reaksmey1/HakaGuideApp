@@ -7,7 +7,8 @@ import { SHOW_CHECKOUT_PAGE,
 				 SET_PAYMENT_RESULT,
 				 FETCH_PAYMENT_RESULT_SUCCESS,
 				 FETCHING_PAYMENT_HISTORIES,
-				 FETCH_PAYMENT_HISTORIES_SUCCESS
+				 FETCH_PAYMENT_HISTORIES_SUCCESS,
+				 PAYING_BY_CASH
 				} from '../actions/types';
 
 const INITIAL_STATE = {loading: false, payment_page_url: null, error: null, amount: "", surchargeAmount: "", totalAmount: "", cashAmount: "", paymentResult: "", payment_session: "", response_status: "", paymentHistories: []};
@@ -16,6 +17,8 @@ export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case SHOW_CHECKOUT_PAGE:
 			return { ...state, loading: true, response_status: ""}
+		case PAYING_BY_CASH:
+			return { ...state, loading: true }
 		case SHOW_CHECKOUT_PAGE_SUCCESS:
 			return { ...state, loading: false, payment_page_url: action.payload.app_payment_page_url, payment_session: action.payload.id}
 		case SHOW_CHECKOUT_PAGE_FAIL:

@@ -57,3 +57,4 @@ export const GET_BOOKING_SUCCESS = "getBookingSuccess";
 export const STORE_TO_SESSION = "storeToSession";
 export const ADDING_ADHOC = "addingAdhoc";
 export const ADDING_ADHOC_SUCCESS = "addingAdhocSuccess";
+export const PAYING_BY_CASH = "payingByCash";

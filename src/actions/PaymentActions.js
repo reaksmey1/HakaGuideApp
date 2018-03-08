@@ -11,7 +11,8 @@ import { SHOW_CHECKOUT_PAGE,
 				 SET_PAYMENT_RESULT,
 				 FETCH_PAYMENT_RESULT_SUCCESS,
 				 FETCHING_PAYMENT_HISTORIES,
-				 FETCH_PAYMENT_HISTORIES_SUCCESS } from './types';
+				 FETCH_PAYMENT_HISTORIES_SUCCESS,
+				 PAYING_BY_CASH } from './types';
 
 
 const showCheckoutSuccess = (dispatch, payment) => {
@@ -134,6 +135,7 @@ export const fetchPaymentHistories = (booking, session) => {
 
 export const onPayByCashConfirmed = (details, amount, session, booking_id, traveller) => {
 	return (dispatch) => {
+		dispatch({ type: PAYING_BY_CASH });
 		paid_by = 'Cash Payment - '+traveller.first_name;
 		axios.get(BASE_URL+`/api/bookings/bookings/${booking_id}/payByCash?details=${paid_by}&amount=${amount}&user=${session.email}`, { headers: { email: session.email, token: session.token } })
 			.then(
