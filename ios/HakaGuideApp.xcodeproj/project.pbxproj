@@ -1212,8 +1212,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hakatours.HakaGuideApp;
 				PRODUCT_NAME = HakaGuideApp;
-				PROVISIONING_PROFILE = "fb1a29ee-866f-4e58-b448-628b39843725";
-				PROVISIONING_PROFILE_SPECIFIER = "7 devices";
+				PROVISIONING_PROFILE = "1da321cc-3c30-409e-b48a-aacf4f15e6a6";
+				PROVISIONING_PROFILE_SPECIFIER = "Graham included";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1240,8 +1240,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hakatours.HakaGuideApp;
 				PRODUCT_NAME = HakaGuideApp;
-				PROVISIONING_PROFILE = "fb1a29ee-866f-4e58-b448-628b39843725";
-				PROVISIONING_PROFILE_SPECIFIER = "7 devices";
+				PROVISIONING_PROFILE = "1da321cc-3c30-409e-b48a-aacf4f15e6a6";
+				PROVISIONING_PROFILE_SPECIFIER = "Graham included";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
